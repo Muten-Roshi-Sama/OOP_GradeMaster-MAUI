@@ -12,7 +12,7 @@ namespace GradeMasterMAUI.Models
     {
 
         public string personID;
-        public string FileName;
+        private string fileName;
         private string firstname;
         private string lastname;
 
@@ -36,6 +36,11 @@ namespace GradeMasterMAUI.Models
         public string Lastname
         {
             get { return lastname; }
+        }
+        public string FileName
+        {
+            get { return fileName; }
+            set {  fileName = value; }
         }
         public string DisplayName
         {

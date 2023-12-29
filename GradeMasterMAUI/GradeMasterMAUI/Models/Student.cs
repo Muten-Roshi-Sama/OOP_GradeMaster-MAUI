@@ -14,6 +14,7 @@ namespace GradeMasterMAUI.Models
         //obtenir la moyenne des evals
         private List<Eval> StudentEvals = new List<Eval>();
         private static List<Student> StudentList = new List<Student>(); //static: single list for all instances.
+        private static readonly object _lockObj = new object();
 
         // Dictionary<Eval> evalDict;
         public Student(string firstname, string lastname)
@@ -27,16 +28,17 @@ namespace GradeMasterMAUI.Models
         }
 
         //---Packing---
-        public static Student unpack(string filename)
+        public static Student Unpack(string filename)
         {
-            //Debug.WriteLine($"Unpacking student from file: {filename
+            
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
-            //Debug.WriteLine($"Full path to file: {SaveFilename
-            string content = File.ReadAllText(SaveFilename); //reads content of txt
+            string content = FileAccessService.ReadFile(SaveFilename); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
-            //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
             Student student = new Student(firstname: tokens[0], lastname: tokens[1]);
             student.FileName = filename;
+            //Debug.WriteLine($"Unpacking student from file: {filename
+            //Debug.WriteLine($"Full path to file: {SaveFilename
+            //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
             //Debug.WriteLine($"Student created: {student.DisplayName} with ID {student.PersonID}");
 
             return student;
@@ -48,20 +50,19 @@ namespace GradeMasterMAUI.Models
             Config.EnsureDirectory();
             IEnumerable<Student> Allstudents = Directory
                 .EnumerateFiles(Config.Dir, "*.Student.txt") //get a list of file names with extension *.student.txt
-                .Select(filename => Student.unpack(Path.GetFileName(filename))) //deserialize each instance
+                .Select(filename => Student.Unpack(Path.GetFileName(filename))) //deserialize each instance
                 .OrderBy(student => student.DisplayName);
             foreach (var student in Allstudents)
             {
                 StudentList.Add(student);
             }
         }
-        //public void 
 
         public void Pack()
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}", Environment.NewLine, Firstname, Lastname);
-            File.WriteAllText(SaveFilename, data);
+            FileAccessService.WriteFile(SaveFilename, data);
         }
 
 

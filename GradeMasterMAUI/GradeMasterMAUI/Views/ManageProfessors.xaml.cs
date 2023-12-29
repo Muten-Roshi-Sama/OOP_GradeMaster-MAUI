@@ -1,7 +1,8 @@
 namespace GradeMasterMAUI.Views;
 using GradeMasterMAUI.Models;
 using GradeMasterMAUI.Services;
-public partial class ManageProfessors : ContentPage
+using System.ComponentModel;
+public partial class ManageProfessors : ContentPage, INotifyPropertyChanged
 {
     public List<Professor> ProfessorList =>Professor.GetProfessorList(); //CANNOT be static
 

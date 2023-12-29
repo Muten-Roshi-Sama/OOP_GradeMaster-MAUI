@@ -13,11 +13,15 @@
             Title="Home"
             ContentTemplate="{DataTemplate Views:MainPage}" />
         <ShellContent
-            Title="Students"
-            ContentTemplate="{DataTemplate Views:ManageStudents}" />
-        <ShellContent
             Title="Professors"
             ContentTemplate="{DataTemplate Views:ManageProfessors}" />
+        <ShellContent
+            Title="Activities"
+            ContentTemplate="{DataTemplate Views:ManageActivities}" />
+        <ShellContent
+            Title="Students"
+            ContentTemplate="{DataTemplate Views:ManageStudents}" />
+        
         <ShellContent
             Title="About Page"
             ContentTemplate="{DataTemplate Views:AboutPage}" />

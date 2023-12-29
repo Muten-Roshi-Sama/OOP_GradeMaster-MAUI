@@ -1,9 +1,12 @@
 namespace GradeMasterMAUI.Views;
 using GradeMasterMAUI.Models;
 using GradeMasterMAUI.Services;
+using System.ComponentModel;
+using System.Diagnostics;
+using Activity = Models.Activity;
 
 
-public partial class ManageStudents : ContentPage
+public partial class ManageStudents : ContentPage, INotifyPropertyChanged
 {
 	public List<Student> StudentList => Student.GetStudentList(); //CANNOT be static
 	public ManageStudents()

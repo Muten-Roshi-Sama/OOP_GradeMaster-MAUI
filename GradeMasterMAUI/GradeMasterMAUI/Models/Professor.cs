@@ -22,18 +22,20 @@ namespace GradeMasterMAUI.Models
         }
 
         //---Packing---
-        public static Professor unpack(string filename)
+        public static Professor Unpack(string filename)
         {
-            //Debug.WriteLine($"Unpacking Professor from file: {filename}");
+                    
+            Config.EnsureDirectory();
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
-            //Debug.WriteLine($"Full path to file: {SaveFilename
-            string content = File.ReadAllText(SaveFilename); //reads content of txt
+            string content = FileAccessService.ReadFile(SaveFilename); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
-            //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
-            Professor professor = new Professor(firstname: tokens[0], lastname: tokens[1], Convert.ToInt32(tokens[2]));
+            Professor professor = new Professor(firstname: tokens[0], lastname: tokens[1], salary: Convert.ToInt32(tokens[2]));
             professor.FileName = filename;
-            //Debug.WriteLine($"Student created: {student.DisplayName} with ID {student.PersonID}");
 
+            //Debug.WriteLine($"Student created: {student.DisplayName} with ID {student.PersonID}");
+            //Debug.WriteLine($"Unpacking Professor from file: {filename}");
+            //Debug.WriteLine($"Full path to file: {SaveFilename
+            //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
             return professor;
         }
 
@@ -43,7 +45,7 @@ namespace GradeMasterMAUI.Models
             Config.EnsureDirectory();
             IEnumerable<Professor> Allprofessors = Directory
                 .EnumerateFiles(Config.Dir, "*.Professor.txt") //get a list of file names with extension *.student.txt
-                .Select(filename => Professor.unpack(Path.GetFileName(filename))) //deserialize each instance
+                .Select(filename => Professor.Unpack(Path.GetFileName(filename))) //deserialize each instance
                 .OrderBy(professor => professor.DisplayName);
             foreach (var prof in Allprofessors)
             {
@@ -54,9 +56,10 @@ namespace GradeMasterMAUI.Models
 
         public void Pack()
         {
+            Config.EnsureDirectory();
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, Firstname, Lastname, Salary);
-            File.WriteAllText(SaveFilename, data);
+            FileAccessService.WriteFile(SaveFilename, data);
         }
 
 
