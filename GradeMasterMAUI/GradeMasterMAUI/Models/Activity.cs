@@ -12,11 +12,11 @@ namespace GradeMasterMAUI.Models
     public class Activity
     {
         //possede un unique enseignant
-        public int ects;
-        public string activityName;
+        private int ects;
+        private string activityName;
         private string fileName;
         public Professor professor; //activity has-a professor (composition).
-        public string professorFile;
+        private string professorFile;
         //private static readonly object _lockObj = new object();
 
         public static List<Activity> ActivityList = [];
@@ -37,7 +37,7 @@ namespace GradeMasterMAUI.Models
             //Debug.WriteLine($"Unpacking student from file: {filename
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
             //Debug.WriteLine($"Full path to file: {SaveFilename
-            string content = FileAccessService.ReadFile(SaveFilename); //reads content of txt
+            string content = FileAccessService.ReadFile(SaveFilename, origin: "Activity-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
             //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
             Activity activity = new Activity(activityName:tokens[0], professorFile:tokens[1], ects:Convert.ToInt32(tokens[2]));
@@ -84,7 +84,7 @@ namespace GradeMasterMAUI.Models
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, ActivityName, ProfessorFile, ECTS);
-            FileAccessService.WriteFile(SaveFilename, data);
+            FileAccessService.WriteFile(SaveFilename, data, origin: "Activity-Pack");
         }
 
 

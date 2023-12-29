@@ -29,10 +29,13 @@
                 <StackLayout>
                     <Entry x:Name="activityNameEntry" Placeholder="Activity Name" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
                     <!--<Picker x:Name="professorPicker" SelectedIndexChanged="OnProfessorSelectedIndexChanged" TextColor="White" FontSize="Medium"/>-->
-                    <Picker ItemsSource="{Binding ProfessorList}"
-                            ItemDisplayBinding="{Binding DisplayName}"
-                            SelectedItem="{Binding SelectedProf}"/>
-                    
+                    <Picker Title="Select a professor"
+                        x:Name="professorPicker"
+                        ItemsSource="{Binding ProfessorList}"
+                        ItemDisplayBinding="{Binding DisplayName}"
+                        SelectedIndexChanged="OnPickerSelectionChanged"/>
+                            
+
                     <Entry x:Name="ectsEntry" Placeholder="ECTS" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
                     
                     <Button Text="Add Activity" Clicked="OnAddActivityClicked" 
