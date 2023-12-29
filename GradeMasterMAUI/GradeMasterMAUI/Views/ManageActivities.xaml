@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GradeMasterMAUI.Views.ManageActivities"
+             Title="ManageActivities">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+
+            <Label Text="Activities List" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
+
+            <Frame CornerRadius="15" Padding="15" BackgroundColor="#252526" HasShadow="True">
+                <CollectionView x:Name="activitiesCollection" ItemsSource="{Binding ActivityList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10" RowDefinitions="Auto" ColumnDefinitions="*,*">
+                                <Label Grid.Column="0" Text="{Binding ActivityName}" FontSize="20" TextColor="#4ECDC4"/>
+                                <Label Grid.Column="1" Text="{Binding ECTS}" FontSize="20" TextColor="#FF6B6B"/>
+                                <Label Grid.Column="1" Text="{Binding professor.DisplayName}" FontSize="20" TextColor="#FF6B6B"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+
+            <Label Text="Add New Activity" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
+
+            <Frame CornerRadius="15" Padding="20" BackgroundColor="#252526" HasShadow="True">
+                <StackLayout>
+                    <Entry x:Name="activityNameEntry" Placeholder="Activity Name" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
+                    <!--<Picker x:Name="professorPicker" SelectedIndexChanged="OnProfessorSelectedIndexChanged" TextColor="White" FontSize="Medium"/>-->
+                    <Picker ItemsSource="{Binding ProfessorList}"
+                            ItemDisplayBinding="{Binding DisplayName}"
+                            SelectedItem="{Binding SelectedProf}"/>
+                    
+                    <Entry x:Name="ectsEntry" Placeholder="ECTS" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
+                    
+                    <Button Text="Add Activity" Clicked="OnAddActivityClicked" 
+                        BackgroundColor="MediumSeaGreen" TextColor="White" 
+                        Margin="0,10,0,0" CornerRadius="10"/>
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+    </ScrollView>
+
+
+
+
+</ContentPage>
