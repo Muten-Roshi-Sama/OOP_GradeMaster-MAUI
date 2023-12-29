@@ -21,45 +21,43 @@ namespace GradeMasterMAUI.Models
         {
             FileName = $"{Path.GetRandomFileName()}.Student.txt";
             StudentEvals = new List<Eval>();
-            //this.StudentEvals = evaluations;
-            //studentList.Add(this);
+            //StudentList.Add(this);  //not really needed since we recreate the list everytime.
+        
+        //this.StudentEvals = evaluations;
         }
 
-
+        //---Packing---
         public static Student unpack(string filename)
         {
-            Console.WriteLine($"Unpacking student from file: {filename}");
-
+            //Debug.WriteLine($"Unpacking student from file: {filename
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
-            Console.WriteLine($"Full path to file: {SaveFilename}");
-
+            //Debug.WriteLine($"Full path to file: {SaveFilename
             string content = File.ReadAllText(SaveFilename); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
-            Console.WriteLine($"Tokens extracted: {string.Join(", ", tokens)}");
-
+            //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
             Student student = new Student(firstname: tokens[0], lastname: tokens[1]);
             student.FileName = filename;
-            Console.WriteLine($"Student created: {student.DisplayName} with ID {student.PersonID}");
+            //Debug.WriteLine($"Student created: {student.DisplayName} with ID {student.PersonID}");
 
             return student;
         }
 
-        public static void unpackAll()
+        public static void UnpackAll()
         {
             StudentList = new List<Student>();
             Config.EnsureDirectory();
-            IEnumerable<Student> students = Directory
+            IEnumerable<Student> Allstudents = Directory
                 .EnumerateFiles(Config.Dir, "*.Student.txt") //get a list of file names with extension *.student.txt
                 .Select(filename => Student.unpack(Path.GetFileName(filename))) //deserialize each instance
                 .OrderBy(student => student.DisplayName);
-            foreach (var student in students)
+            foreach (var student in Allstudents)
             {
                 StudentList.Add(student);
             }
         }
         //public void 
 
-        public void pack()
+        public void Pack()
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}", Environment.NewLine, Firstname, Lastname);
@@ -77,10 +75,10 @@ namespace GradeMasterMAUI.Models
         {
             StudentEvals.Add(eval);
         }
-        public string PersonID
-        {
-            get { return personID; }
-        }
+        //public string PersonID
+        //{
+        //    get { return personID; }
+        //}
 
         //public double GetAverage()
         //{

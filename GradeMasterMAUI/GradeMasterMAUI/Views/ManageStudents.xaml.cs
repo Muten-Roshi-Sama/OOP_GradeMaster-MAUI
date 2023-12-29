@@ -5,46 +5,34 @@ using GradeMasterMAUI.Services;
 
 public partial class ManageStudents : ContentPage
 {
-	public List<Student> StudentList => Student.GetStudentList();
+	public List<Student> StudentList => Student.GetStudentList(); //CANNOT be static
 	public ManageStudents()
 	{
 		InitializeComponent();
-		Student.unpackAll();
+		Student.UnpackAll();
         BindingContext = this;
         DataChangedNotifier.OnDataChanged += UpdateData;
 
     }
 	private void OnAddStudentClicked(object sender, EventArgs e)
 	{
-        var newStudent = new Student(firstNameEntry.Text, lastNameEntry.Text);
-        newStudent.pack(); // Save the new student
+        var newStudent = new Student(firstnameEntry.Text, lastnameEntry.Text);
+        newStudent.Pack(); // Save the new student
 
         //Update Data
-        Student.unpackAll();
+        Student.UnpackAll();
         OnPropertyChanged(nameof(StudentList));
 
-		firstNameEntry.Text = string.Empty;
-		lastNameEntry.Text =string.Empty;
+		firstnameEntry.Text = string.Empty;
+		lastnameEntry.Text =string.Empty;
 
     }
 
 	private void UpdateData()
 	{
-		Student.unpackAll();
+		Student.UnpackAll();
 		OnPropertyChanged(nameof(StudentList));
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GradeMasterMAUI.Views.ManageStudents"
-             Title="Manage Students"
-             BackgroundColor="#1E1E1E">
+             x:Class="GradeMasterMAUI.Views.ManageProfessors"
+             Title="Manage Professors">
 
     <ScrollView>
         <StackLayout Padding="20" Spacing="20">
 
-            <Label Text="Students" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
+            <Label Text="Professors" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
 
             <Frame CornerRadius="15" Padding="15" BackgroundColor="#252526" HasShadow="True">
-                <CollectionView x:Name="studentsCollection" ItemsSource="{Binding StudentList}">
+                <CollectionView x:Name="professorsCollection" ItemsSource="{Binding ProfessorList}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="10" RowDefinitions="Auto" ColumnDefinitions="*,*">
+                            <Grid Padding="10" RowDefinitions="Auto" ColumnDefinitions="*,*,*">
                                 <Label Grid.Column="0" Text="{Binding Firstname}" FontSize="20" TextColor="#4ECDC4"/>
                                 <Label Grid.Column="1" Text="{Binding Lastname}" FontSize="20" TextColor="#FF6B6B"/>
+                                <Label Grid.Column="2" Text="{Binding Salary}" FontSize="20" TextColor="PaleVioletRed"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Frame>
 
-            <Label Text="Add New Student" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
+            <Label Text="Add New Professor" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
 
             <Frame CornerRadius="15" Padding="20" BackgroundColor="#252526" HasShadow="True">
                 <StackLayout>
                     <Entry x:Name="firstnameEntry" Placeholder="First Name" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
                     <Entry x:Name="lastnameEntry" Placeholder="Last Name" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
-                    <Button Text="Add Student" Clicked="OnAddStudentClicked" 
-                            BackgroundColor="MediumSeaGreen" TextColor="White" 
-                            Margin="0,10,0,0" CornerRadius="10"/>
+                    <Entry x:Name="salaryEntry" Placeholder="salary" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
+                    
+                    <Button Text="Add Student" Clicked="OnAddProfessorClicked" 
+                        BackgroundColor="MediumSeaGreen" TextColor="White" 
+                        Margin="0,10,0,0" CornerRadius="10"/>
                 </StackLayout>
             </Frame>
 
