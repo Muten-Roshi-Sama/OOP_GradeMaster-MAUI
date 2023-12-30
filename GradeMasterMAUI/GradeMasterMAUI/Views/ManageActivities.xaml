@@ -10,18 +10,28 @@
             <Label Text="Activities List" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
 
             <Frame CornerRadius="15" Padding="15" BackgroundColor="#252526" HasShadow="True">
-                <CollectionView x:Name="activitiesCollection" ItemsSource="{Binding ActivityList}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="10" RowDefinitions="Auto" ColumnDefinitions="*,*">
-                                <Label Grid.Column="0" Text="{Binding ActivityName}" FontSize="20" TextColor="#4ECDC4"/>
-                                <Label Grid.Column="1" Text="{Binding ECTS}" FontSize="20" TextColor="#FF6B6B"/>
-                                <Label Grid.Column="1" Text="{Binding professor.DisplayName}" FontSize="20" TextColor="#FF6B6B"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <!-- Column Headers -->
+                <VerticalStackLayout>
+                    <Grid Padding="10" ColumnDefinitions="*,*">
+                        <Label Grid.Column="0" Text="Activity Name" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>
+                        <Label Grid.Column="1" Text="ECTS Professor" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>
+                    </Grid>
+
+                    <!-- CollectionView -->
+                    <CollectionView x:Name="activitiesCollection" ItemsSource="{Binding ActivityList}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10" ColumnDefinitions="*,*">
+                                    <Label Grid.Column="0" Text="{Binding ActivityName}" FontSize="20" TextColor="#4ECDC4"/>
+                                    <Label Grid.Column="1" Text="{Binding ECTS}" FontSize="20" TextColor="#FF6B6B"/>
+                                    <Label Grid.Column="1" Text="{Binding professor.DisplayName}" FontSize="20" TextColor="#FF6B6B"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
             </Frame>
+
 
             <Label Text="Add New Activity" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
 

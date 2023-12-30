@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GradeMasterMAUI.Services;
 using System.Diagnostics;
+using System.IO.Enumeration;
 
 namespace GradeMasterMAUI.Models
 {
@@ -27,6 +28,7 @@ namespace GradeMasterMAUI.Models
                     
             Config.EnsureDirectory();
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
+            //Debug.WriteLine($"prof file name : {SaveFilename}");
             string content = FileAccessService.ReadFile(SaveFilename, origin: "Professor-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
             Professor professor = new Professor(firstname: tokens[0], lastname: tokens[1], salary: Convert.ToInt32(tokens[2]));
@@ -41,7 +43,7 @@ namespace GradeMasterMAUI.Models
 
         public static void UnpackAll()
         {
-            ProfessorList = new List<Professor>();
+            ProfessorList = [];
             Config.EnsureDirectory();
             IEnumerable<Professor> Allprofessors = Directory
                 .EnumerateFiles(Config.Dir, "*.Professor.txt") //get a list of file names with extension *.student.txt
@@ -50,6 +52,7 @@ namespace GradeMasterMAUI.Models
             foreach (var prof in Allprofessors)
             {
                 ProfessorList.Add(prof);
+                //Debug.WriteLine($"filename : {filename}");
             }
         }
         //public void 

@@ -16,6 +16,7 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
         Activity.UnpackAll();
+        Debug.WriteLine($"ActivityList Count : {ActivityList.Count}");
         //foreach (var prof in Professor.GetProfessorList())
         //{
         //    professorPicker.Items.Add(prof);

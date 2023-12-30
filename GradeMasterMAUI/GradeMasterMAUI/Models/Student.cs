@@ -12,9 +12,9 @@ namespace GradeMasterMAUI.Models
     {
         //possède plusieurs eval
         //obtenir la moyenne des evals
-        private List<Eval> StudentEvals = new List<Eval>();
-        private static List<Student> StudentList = new List<Student>(); //static: single list for all instances.
-        private static readonly object _lockObj = new object();
+        private List<Eval> StudentEvals = [];
+        private static List<Student> StudentList = []; //static: single list for all instances.
+        //private static readonly object _lockObj = new object();
 
         // Dictionary<Eval> evalDict;
         public Student(string firstname, string lastname)

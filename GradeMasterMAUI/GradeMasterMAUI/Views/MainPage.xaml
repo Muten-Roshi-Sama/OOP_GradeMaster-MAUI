@@ -14,7 +14,7 @@
                             <Grid Padding="10" RowDefinitions="Auto" ColumnDefinitions="*,*">
                                 <Label Grid.Column="0" Text="{Binding ActivityName}" FontSize="20" TextColor="#4ECDC4"/>
                                 <Label Grid.Column="1" Text="{Binding ECTS}" FontSize="20" TextColor="#FF6B6B"/>
-                                <Label Grid.Column="1" Text="{Binding professor.DisplayName}" FontSize="20" TextColor="#FF6B6B"/>
+                                <!--<Label Grid.Column="2" Text="{Binding professor.DisplayName}" FontSize="20" TextColor="#FF6B6B"/>-->
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

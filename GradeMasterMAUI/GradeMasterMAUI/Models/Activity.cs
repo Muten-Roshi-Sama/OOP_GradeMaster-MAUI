@@ -24,7 +24,8 @@ namespace GradeMasterMAUI.Models
         public Activity(string activityName, string professorFile, int ects)
         {
             this.activityName = activityName;
-            professor = Professor.Unpack(professorFile);
+            this.professorFile = professorFile;
+            this.professor = Professor.Unpack(professorFile);
             this.ects = ects;
             fileName = $"{Path.GetRandomFileName()}.Activity.txt";
             //ActivityList.Add(this);  //not really needed since we recreate the list everytime.
@@ -34,15 +35,23 @@ namespace GradeMasterMAUI.Models
         //---Packing---
         public static Activity Unpack(string filename)
         {
-            //Debug.WriteLine($"Unpacking student from file: {filename
+            //Debug.WriteLine($"Unpacking activity from file: {filename}");
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
-            //Debug.WriteLine($"Full path to file: {SaveFilename
+            //Debug.WriteLine($"Full path to file: {SaveFilename}");
+
+
             string content = FileAccessService.ReadFile(SaveFilename, origin: "Activity-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
-            //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
-            Activity activity = new Activity(activityName:tokens[0], professorFile:tokens[1], ects:Convert.ToInt32(tokens[2]));
-            activity.FileName = filename;
-            //Debug.WriteLine($"Student created: {student.DisplayName} with ID {student.PersonID}");
+            //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens)}");
+            var filePathToken = tokens[1];
+            //var filePathToken = tokens[1] + ".Professor.txt";
+
+            Activity activity = new(activityName: tokens[0], professorFile: filePathToken, ects: Convert.ToInt32(tokens[2]))
+            {
+                FileName = filename
+            };
+           
+            //Debug.WriteLine($"Activity created: {activity.DisplayName} with professor {activity.professor}");
 
             return activity;
         }
@@ -79,7 +88,6 @@ namespace GradeMasterMAUI.Models
             
             
         }
-
         public void Pack()
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
@@ -97,7 +105,6 @@ namespace GradeMasterMAUI.Models
         {
             return ActivityList;
         }
-
         public int ECTS
         {
             get { return ects; }
@@ -123,6 +130,8 @@ namespace GradeMasterMAUI.Models
         {
             get { return $"{ActivityName} {ECTS}"; }
         }
+
+        
 
     }
 }
