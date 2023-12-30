@@ -11,11 +11,12 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
 {
     public List<Activity> ActivityList => Activity.GetActivityList(); //CANNOT be static
     public List<Professor> ProfessorList => Professor.GetProfessorList();
-    private Professor selectedProf;
+    public Professor selectedProf;
     public ManageActivities()
 	{
 		InitializeComponent();
         Activity.UnpackAll();
+        Professor.UnpackAll();
         //foreach (var prof in Professor.GetProfessorList())
         //{
         //    professorPicker.Items.Add(prof);
@@ -80,7 +81,10 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
     }
 
     
-
+    public Professor SelectedProf
+    {
+        get { return selectedProf; }
+    }
 
 
     

@@ -15,7 +15,7 @@ namespace GradeMasterMAUI.Models
         private int ects;
         private string activityName;
         private string fileName;
-        public Professor professor; //activity has-a professor (composition).
+        private Professor professor; //activity has-a professor (composition).
         private string professorFile;
         //private static readonly object _lockObj = new object();
 
@@ -131,7 +131,6 @@ namespace GradeMasterMAUI.Models
             get { return $"{ActivityName} {ECTS}"; }
         }
 
-        
-
+        public Professor Professor { get => professor; set => professor = value; }
     }
 }
