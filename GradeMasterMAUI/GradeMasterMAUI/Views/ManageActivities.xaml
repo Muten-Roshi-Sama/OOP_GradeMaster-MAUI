@@ -17,7 +17,6 @@
                         <Label Grid.Column="1" Text="ECTS" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>
                         <Label Grid.Column="2" Text="Professor" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>
                     </Grid>
-
                     <!-- CollectionView -->
                     <CollectionView x:Name="activitiesCollection" ItemsSource="{Binding ActivityList}">
                         <CollectionView.ItemTemplate>
