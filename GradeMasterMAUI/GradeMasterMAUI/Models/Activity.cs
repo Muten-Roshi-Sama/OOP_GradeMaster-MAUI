@@ -128,9 +128,9 @@ namespace GradeMasterMAUI.Models
 
         public string DisplayName
         {
-            get { return $"{ActivityName} {ECTS}"; }
+            get { return $"{ActivityName}"; }
         }
 
-        public Professor Professor { get => professor; set => professor = value; }
+        public Professor Professor { get => professor; set => professor = value; } //Encapsulate field but still use field (auto-generated).
     }
 }
