@@ -3,5 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GradeMasterMAUI.Views.ManageBulletin"
              Title="ManageBulletin">
-    
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+
+            <Label Text="Bulletin" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
+
+
+            <Picker Title="Select a Student"
+                    x:Name="studentPicker"
+                    ItemsSource="{Binding StudentList}"
+                    ItemDisplayBinding="{Binding DisplayName}"
+                    SelectedIndexChanged="OnStudentPickerSelectionChanged"/>
+            <Frame CornerRadius="15" Padding="15" BackgroundColor="#252526" HasShadow="True">
+                <!-- Column Headers -->
+                <VerticalStackLayout>
+                    <Grid Padding="10" ColumnDefinitions="*,*">
+                        <!--<Label Grid.Column="0" Text="Student Name" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>-->
+                        <Label Grid.Column="0" Text="Activity" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>
+                        <Label Grid.Column="1" Text="Eval" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>
+                    </Grid>
+                    <CollectionView x:Name="evalCollection" ItemsSource="{Binding SelectedStudentEvals}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10" ColumnDefinitions="*,*">
+                                    <Label Grid.Column="0" Text="{Binding Activity.DisplayName}" FontSize="20" TextColor="#4ECDC4"/>
+                                    <Label Grid.Column="1" Text="{Binding GetEval}" FontSize="20" TextColor="#FF6B6B"/>
+                                    <!--<Label Grid.Column="2" Text="{Binding }" FontSize="20" TextColor="PaleVioletRed"/>-->
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+
+
+
+            
+            
+        </StackLayout>
+        </ScrollView>
 </ContentPage>

@@ -24,6 +24,9 @@
         <ShellContent
             Title="Eval"
             ContentTemplate="{DataTemplate Views:ManageEval}" />
+        <ShellContent
+            Title="Bulletin"
+            ContentTemplate="{DataTemplate Views:ManageBulletin}" />
         
         <ShellContent
             Title="About Page"

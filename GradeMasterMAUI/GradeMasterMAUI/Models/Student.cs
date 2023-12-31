@@ -12,7 +12,7 @@ namespace GradeMasterMAUI.Models
     {
         //possède plusieurs eval
         //obtenir la moyenne des evals
-        private List<Eval> StudentEvals = [];
+        private List<Eval> studentEvals = [];
         private static List<Student> StudentList = []; //static: single list for all instances.
         //private static readonly object _lockObj = new object();
 
@@ -21,7 +21,7 @@ namespace GradeMasterMAUI.Models
             : base(firstname, lastname)
         {
             FileName = $"{Path.GetRandomFileName()}.Student.txt";
-            StudentEvals = new List<Eval>();
+            studentEvals = new List<Eval>();
             //StudentList.Add(this);  //not really needed since we recreate the list everytime.
         
         //this.StudentEvals = evaluations;
@@ -29,15 +29,19 @@ namespace GradeMasterMAUI.Models
 
         public void UpdateStudentEvalList()
         {
-            StudentEvals = new List<Eval>();
+            studentEvals = [];
             Config.EnsureDirectory();
             IEnumerable<Eval> AllEval = Directory
-                .EnumerateFiles(Config.Dir, "*.Student.txt") //get a list of file names with extension *.student.txt
+                .EnumerateFiles(Config.Dir, "*.Eval.txt") //get a list of file names with extension *.student.txt
                 .Select(filename => Eval.Unpack(Path.GetFileName(filename))) //deserialize each instance
                 .OrderBy(eval => eval.GetEvalActivity);
             foreach (var eval in AllEval)
             {
-                StudentEvals.Add(eval);
+                if(eval.Student.FileName == FileName)
+                {
+                    studentEvals.Add(eval);
+                }
+                
             }
         }
 
@@ -90,9 +94,13 @@ namespace GradeMasterMAUI.Models
         {
             return StudentList;
         }
+        public List<Eval> GetStudentEvalList()
+        {
+            return studentEvals;
+        }
         public void Add(Eval eval)
         {
-            StudentEvals.Add(eval);
+            studentEvals.Add(eval);
         }
         //public string PersonID
         //{

@@ -27,6 +27,7 @@ namespace GradeMasterMAUI.Models
             this.studentFile = studentFile;
             this.activityFile = activityFile;   
             this.student = Student.Unpack(studentFile);
+
             this.activity = Activity.Unpack(activityFile);
             fileName = $"{Path.GetRandomFileName()}.Eval.txt";
         }
