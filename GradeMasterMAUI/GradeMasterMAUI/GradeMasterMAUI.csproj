@@ -85,6 +85,9 @@
 	  <MauiXaml Update="Views\ManageActivities.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ManageBulletin.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ManageEval.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

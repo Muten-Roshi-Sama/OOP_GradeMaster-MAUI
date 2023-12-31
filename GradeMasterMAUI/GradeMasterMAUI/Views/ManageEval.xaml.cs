@@ -69,26 +69,45 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
         Debug.WriteLine($"[ManageEval] activityFile is : {activityFile}");
         Debug.WriteLine($"[ManageEval] studentFile is : {studentFile}");
 
-        var eval = Convert.ToInt32(evalEntry.Text);
-
-        if (eval >= 0 && eval <= 20)
+        try
         {
-            var newEval = new Eval(eval: eval, studentFile: studentFile, activityFile: activityFile);
-            //new AllEvalList(_selectedStudent, eval);
-            //_selectedEval = newEval;
-            //Eval(int eval, string studentFile, string activityFile)
-            newEval.Pack(); // Save the new student
-            Debug.WriteLine("New Eval Added ! [OnAddEvalClicked]");
-            errorLabel.IsVisible = false;
+            var eval = Convert.ToInt32(evalEntry.Text);
+            if (eval >= 0 && eval <= 20)
+            {
+                var newEval = new Eval(eval: eval, studentFile: studentFile, activityFile: activityFile);
+                //new AllEvalList(_selectedStudent, eval);
+                //_selectedEval = newEval;
+                //Eval(int eval, string studentFile, string activityFile)
+                newEval.Pack(); // Save the new student
+                Debug.WriteLine("New Eval Added ! [OnAddEvalClicked]");
+                errorLabel.IsVisible = false;
+            }
+            else
+            {
+                errorLabel.Text = "[Error] Please enter a valid integer for evaluation.";
+                errorLabel.IsVisible = true;
+                //Clear Form
+                evalEntry.Text = string.Empty;
+            }
         }
-        else
+        catch (FormatException)
         {
-            errorLabel.Text = "[Error] Evaluation should be between 0 and 20.";
+            // Handle the case where the input is not a valid integer
+            errorLabel.Text = "[Error] Please enter a valid integer for evaluation.";
             errorLabel.IsVisible = true;
-            //Clear Form
             evalEntry.Text = string.Empty;
         }
-        
+        catch (Exception ex)
+        {
+            // Handle other types of exceptions
+            errorLabel.Text = $"[Error] Unexpected error: {ex.Message}";
+            errorLabel.IsVisible = true;
+            evalEntry.Text = string.Empty;
+        }
+
+
+
+
         //Update Data
         Activity.UnpackAll();
         Student.UnpackAll();
