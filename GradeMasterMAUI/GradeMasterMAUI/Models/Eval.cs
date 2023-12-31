@@ -16,7 +16,8 @@ namespace GradeMasterMAUI.Models
         private string activityFile;
         private string fileName;
         public int eval;
-        public Student student { get; private set; }
+        private Student student;
+        private Activity activity;
 
         public static List<Eval> EvalList;
 
@@ -26,8 +27,8 @@ namespace GradeMasterMAUI.Models
             this.studentFile = studentFile;
             this.activityFile = activityFile;   
             this.student = Student.Unpack(studentFile);
+            this.activity = Activity.Unpack(activityFile);
             fileName = $"{Path.GetRandomFileName()}.Eval.txt";
-            //GradesList.Add(this);
         }
 
         public void Note(string appr)
@@ -81,7 +82,7 @@ namespace GradeMasterMAUI.Models
                 IEnumerable<Eval> AllEvals = Directory
                     .EnumerateFiles(Config.Dir, "*.Eval.txt") //get a list of file names with extension *.student.txt
                     .Select(filename => Eval.Unpack(Path.GetFileName(filename))) //deserialize each instance
-                    .OrderBy(eval => eval.DisplayEval);
+                    .OrderBy(eval => eval.GetEvalActivity);
                 foreach (var eval in AllEvals)
                 {
                     EvalList.Add(eval);
@@ -131,13 +132,15 @@ namespace GradeMasterMAUI.Models
             get { return eval.ToString(); }
             //set { eval = value; }
         }
-        public string DisplayEval
+        public string GetEvalActivity
         {
-            get { return $"{GetEval}"; }
+            get { return $"{GetEval}/20  in  {Activity.DisplayName}"; }
             
         }
 
         public string StudentFile { get => studentFile; set => studentFile = value; } //Encapsulate field but still use field (auto-generated).
         public string ActivityFile { get => activityFile; set => activityFile = value; } //Encapsulate field but still use field (auto-generated).
+        public Activity Activity { get => activity; set => activity = value; }
+        public Student Student { get => student; set => student = value; }
     }
 }

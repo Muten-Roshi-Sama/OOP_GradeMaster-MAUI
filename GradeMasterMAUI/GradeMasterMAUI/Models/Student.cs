@@ -27,6 +27,24 @@ namespace GradeMasterMAUI.Models
         //this.StudentEvals = evaluations;
         }
 
+        public void UpdateStudentEvalList()
+        {
+            StudentEvals = new List<Eval>();
+            Config.EnsureDirectory();
+            IEnumerable<Eval> AllEval = Directory
+                .EnumerateFiles(Config.Dir, "*.Student.txt") //get a list of file names with extension *.student.txt
+                .Select(filename => Eval.Unpack(Path.GetFileName(filename))) //deserialize each instance
+                .OrderBy(eval => eval.GetEvalActivity);
+            foreach (var eval in AllEval)
+            {
+                StudentEvals.Add(eval);
+            }
+        }
+
+
+
+
+
         //---Packing---
         public static Student Unpack(string filename)
         {

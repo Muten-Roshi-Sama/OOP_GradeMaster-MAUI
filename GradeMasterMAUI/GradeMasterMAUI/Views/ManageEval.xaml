@@ -17,18 +17,17 @@
                         <Label Grid.Column="1" Text="Activity" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>
                         <Label Grid.Column="2" Text="Eval" FontSize="20" TextColor="LightGray" HorizontalTextAlignment="Start"/>
                     </Grid>
-                    <!-- CollectionView -->
-                    <!--<CollectionView x:Name="evalCollection" ItemsSource="{Binding ActivityList}">
+                    <CollectionView x:Name="evalCollection" ItemsSource="{Binding EvalList}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Padding="10" ColumnDefinitions="*,*,*">
-                                    <Label Grid.Column="0" Text="{Binding ActivityName}" FontSize="20" TextColor="#4ECDC4"/>
-                                    <Label Grid.Column="1" Text="{Binding ECTS}" FontSize="20" TextColor="#FF6B6B"/>
-                                    <Label Grid.Column="2" Text="{Binding Professor.DisplayName}" FontSize="20" TextColor="PaleVioletRed"/>
+                                    <Label Grid.Column="0" Text="{Binding Student.DisplayName}" FontSize="20" TextColor="#4ECDC4"/>
+                                    <Label Grid.Column="1" Text="{Binding Activity.DisplayName}" FontSize="20" TextColor="#FF6B6B"/>
+                                    <Label Grid.Column="2" Text="{Binding GetEval}" FontSize="20" TextColor="PaleVioletRed"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                    </CollectionView>-->
+                    </CollectionView>
                 </VerticalStackLayout>
             </Frame>
 

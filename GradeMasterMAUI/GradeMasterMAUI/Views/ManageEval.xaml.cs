@@ -11,14 +11,22 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
 {
     public List<Activity> ActivityList => Activity.GetActivityList(); //CANNOT be static
     public List<Student> StudentList => Student.GetStudentList(); //CANNOT be static
+    //public static List<AllEvalList> EvaluationsList => AllEvalList.GetEvaluationsList();
     public List<Eval> EvalList => Eval.GetEvalList(); //CANNOT be static ?? //TODO
+
     private Student _selectedStudent;
     private Activity _selectedActivity;
+    //private Eval _selectedEval;
+
+
+
+
     public ManageEval()
 	{
 		InitializeComponent();
         Activity.UnpackAll();
         Student.UnpackAll();
+        Eval.UnpackAll();
         BindingContext = this;
         DataChangedNotifier.OnDataChanged += UpdateData;
     }
@@ -26,8 +34,10 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
     {
         Activity.UnpackAll();
         Student.UnpackAll();
+        Eval.UnpackAll();
         OnPropertyChanged(nameof(ActivityList));
         OnPropertyChanged(nameof(StudentList));
+        OnPropertyChanged(nameof(EvalList));
     }
 
     private void OnStudentPickerSelectionChanged(object sender, EventArgs eventArgs)
@@ -64,6 +74,8 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
         if (eval >= 0 && eval <= 20)
         {
             var newEval = new Eval(eval: eval, studentFile: studentFile, activityFile: activityFile);
+            //new AllEvalList(_selectedStudent, eval);
+            //_selectedEval = newEval;
             //Eval(int eval, string studentFile, string activityFile)
             newEval.Pack(); // Save the new student
             Debug.WriteLine("New Eval Added ! [OnAddEvalClicked]");
@@ -77,7 +89,6 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
             evalEntry.Text = string.Empty;
         }
         
-
         //Update Data
         Activity.UnpackAll();
         Student.UnpackAll();
@@ -91,14 +102,18 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
 
     }
 
+    //public Student SelectedStudent
+    //{
+    //    get { return _selectedStudent; }
+    //}
+    //public Activity SelectedActivity
+    //{
+    //    get { return _selectedActivity; }
+    //}
 
-    public Student SelectedStudent
-    {
-        get { return _selectedStudent; }
-    }
-    public Activity SelectedActivity
-    {
-        get { return _selectedActivity; }
-    }
+    //public Eval SelectedEval
+    //{
+    //    get { return _selectedEval; }
+    //}
 
 }
