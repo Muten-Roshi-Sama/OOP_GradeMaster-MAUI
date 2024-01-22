@@ -22,8 +22,9 @@ namespace GradeMasterMAUI.Services
             if (!Directory.Exists(Dir))
             {
                 Directory.CreateDirectory(Dir);
-                FileEncryptionService.InitializeEncryptionKey();
+                
             }
+            FileEncryptionService.InitializeEncryptionKey();
         }
 
         

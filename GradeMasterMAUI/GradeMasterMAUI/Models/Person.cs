@@ -19,10 +19,7 @@ namespace GradeMasterMAUI.Models
 
         public Person(string firstname, string lastname, string personID = "0")
         {
-            if (personID == "0")
-            {
-                personID = Guid.NewGuid().ToString();
-            }
+            
             this.firstname = firstname;
             this.lastname = lastname;
             this.personID = personID;

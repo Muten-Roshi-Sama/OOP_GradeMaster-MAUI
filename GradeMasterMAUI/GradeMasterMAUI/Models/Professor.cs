@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GradeMasterMAUI.Services;
 using System.Diagnostics;
 using System.IO.Enumeration;
+//using static Java.Util.Concurrent.Flow;
 
 namespace GradeMasterMAUI.Models
 {
@@ -14,7 +15,7 @@ namespace GradeMasterMAUI.Models
         private int salary; //good practice to use private, use a get function for reading the value. Now its protected from involuntary changes to salary.
         private static HashSet<string> processedProfessorFiles = new HashSet<string>();
 
-        private static List<Professor> ProfessorList = new List<Professor>(); //static: single list for all instances.
+        private static List<Professor> ProfessorList = []; //static: single list for all instances.
 
         public Professor(string firstname, string lastname, int salary)
             : base(firstname, lastname)
@@ -40,24 +41,34 @@ namespace GradeMasterMAUI.Models
             //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
             return professor;
         }
-
         public static void UnpackAll()
         {
             Config.EnsureDirectory();
-            var professorFiles = Directory.EnumerateFiles(Config.Dir, "*.Professor.txt");
-
-            foreach (var file in professorFiles)
+            ProfessorList = new List<Professor>();
+            Config.EnsureDirectory();
+            IEnumerable<Professor> Allprofessors = Directory
+                .EnumerateFiles(Config.Dir, "*.Professor.txt") //get a list of file names with extension *.student.txt
+                .Select(filename => Professor.Unpack(Path.GetFileName(filename))) //deserialize each instance
+                .OrderBy(professor => professor.DisplayName);
+            foreach (var professor in Allprofessors)
             {
-                string fileName = Path.GetFileName(file);
-                if (!processedProfessorFiles.Contains(fileName))
-                {
-                    var professor = Professor.Unpack(fileName);
-                    ProfessorList.Add(professor);
-                    // Debug.WriteLine($"filename : {fileName}");
-                    processedProfessorFiles.Add(fileName);
-                }
+                ProfessorList.Add(professor);
             }
         }
+
+        //var professorFiles = Directory.EnumerateFiles(Config.Dir, "*.Professor.txt");
+
+        //    foreach (var file in professorFiles)
+        //    {
+        //        string fileName = Path.GetFileName(file);
+        //        if (!processedProfessorFiles.Contains(fileName))
+        //        {
+        //            var professor = Professor.Unpack(fileName);
+        //ProfessorList.Add(professor);
+        //            // Debug.WriteLine($"filename : {fileName}");
+        //            processedProfessorFiles.Add(fileName);
+        //        }
+        //}
 
         public void Pack()
         {
@@ -80,5 +91,4 @@ namespace GradeMasterMAUI.Models
             return ProfessorList;
         }
     }
-    
 }
