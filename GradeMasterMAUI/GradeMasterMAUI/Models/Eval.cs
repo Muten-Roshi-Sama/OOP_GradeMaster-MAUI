@@ -59,7 +59,7 @@ namespace GradeMasterMAUI.Models
         public static Eval Unpack(string filename)
         {
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
-            string content = FileAccessService.ReadFile(SaveFilename, origin: "Eval-Unpack"); //reads content of txt
+            string content = FileAccessService.ReadFileAsync(SaveFilename, origin: "Eval-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
 
             Eval eval = new(eval: Convert.ToInt32(tokens[0]), studentFile: tokens[1], activityFile: tokens[2])
@@ -79,7 +79,7 @@ namespace GradeMasterMAUI.Models
             try
             {
                 EvalList = new List<Eval>();
-                Config.EnsureDirectory();
+                //Config.EnsureDirectory();
                 IEnumerable<Eval> AllEvals = Directory
                     .EnumerateFiles(Config.Dir, "*.Eval.txt") //get a list of file names with extension *.student.txt
                     .Select(filename => Eval.Unpack(Path.GetFileName(filename))) //deserialize each instance
@@ -108,7 +108,7 @@ namespace GradeMasterMAUI.Models
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, eval, StudentFile, ActivityFile);
-            FileAccessService.WriteFile(SaveFilename, data, origin: "Eval-Pack");
+            FileAccessService.WriteFileAsync(SaveFilename, data, origin: "Eval-Pack");
         }
 
 

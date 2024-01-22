@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using GradeMasterMAUI.Services;
 
 namespace GradeMasterMAUI.Services
 {
@@ -21,7 +22,14 @@ namespace GradeMasterMAUI.Services
             if (!Directory.Exists(Dir))
             {
                 Directory.CreateDirectory(Dir);
+                EnsureEncryptionKey();
             }
+        }
+
+        // Check if an encryption key exists and create one if not
+        private static async Task EnsureEncryptionKey()
+        {            
+                await FileEncryptionService.GenerateAndStoreAesKey();
         }
     }
 }

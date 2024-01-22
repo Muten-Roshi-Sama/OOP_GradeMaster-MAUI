@@ -40,7 +40,7 @@ namespace GradeMasterMAUI.Models
             //Debug.WriteLine($"Full path to file: {SaveFilename}");
 
 
-            string content = FileAccessService.ReadFile(SaveFilename, origin: "Activity-Unpack"); //reads content of txt
+            string content = FileAccessService.ReadFileAsync(path:SaveFilename, errorOrigin: "Activity-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
             //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens)}");
             var filePathToken = tokens[1];
@@ -63,7 +63,7 @@ namespace GradeMasterMAUI.Models
                 try
                 {
                     ActivityList = new List<Activity>();
-                    Config.EnsureDirectory();
+                    //Config.EnsureDirectory();
                     IEnumerable<Activity> Allactivities = Directory
                         .EnumerateFiles(Config.Dir, "*.Activity.txt") //get a list of file names with extension *.student.txt
                         .Select(filename => Activity.Unpack(Path.GetFileName(filename))) //deserialize each instance
@@ -92,7 +92,7 @@ namespace GradeMasterMAUI.Models
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, ActivityName, ProfessorFile, ECTS);
-            FileAccessService.WriteFile(SaveFilename, data, origin: "Activity-Pack");
+            FileAccessService.WriteFileAsync(SaveFilename, data, origin: "Activity-Pack");
         }
 
 

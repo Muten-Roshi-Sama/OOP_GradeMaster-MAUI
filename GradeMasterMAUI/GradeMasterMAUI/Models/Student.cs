@@ -30,7 +30,7 @@ namespace GradeMasterMAUI.Models
         public void UpdateStudentEvalList()
         {
             studentEvals = [];
-            Config.EnsureDirectory();
+            
             IEnumerable<Eval> AllEval = Directory
                 .EnumerateFiles(Config.Dir, "*.Eval.txt") //get a list of file names with extension *.student.txt
                 .Select(filename => Eval.Unpack(Path.GetFileName(filename))) //deserialize each instance
@@ -69,7 +69,6 @@ namespace GradeMasterMAUI.Models
         public static void UnpackAll()
         {
             StudentList = new List<Student>();
-            Config.EnsureDirectory();
             IEnumerable<Student> Allstudents = Directory
                 .EnumerateFiles(Config.Dir, "*.Student.txt") //get a list of file names with extension *.student.txt
                 .Select(filename => Student.Unpack(Path.GetFileName(filename))) //deserialize each instance
@@ -84,7 +83,7 @@ namespace GradeMasterMAUI.Models
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}", Environment.NewLine, Firstname, Lastname);
-            FileAccessService.WriteFile(SaveFilename, data, origin:"Student-Pack");
+            FileAccessService.WriteFileAsync(SaveFilename, data, origin:"Student-Pack");
         }
 
 

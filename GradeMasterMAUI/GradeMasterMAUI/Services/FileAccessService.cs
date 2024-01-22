@@ -4,32 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GradeMasterMAUI.Services;
+using System.IO;
 
 namespace GradeMasterMAUI.Services
 {
     public static class FileAccessService
     {
-        private static readonly object FileLock = new();
+        //private static readonly object FileLock = new();
+        private static readonly SemaphoreSlim FileSemaphore = new SemaphoreSlim(1, 1);
 
-        public static string ReadFile(string path, string origin)
+        public static async Task<string> ReadFileAsync(string path, string errorOrigin)
         {
-            lock (FileLock)
+            await FileSemaphore.WaitAsync();
+            try
             {
                 Config.EnsureDirectory();
                 if (!File.Exists(path))
                 {
-                    throw new FileNotFoundException($"The file at {path} was not found.[Origin : FileAccessService-{origin}]");
+                    throw new FileNotFoundException($"The file at {path} was not found.[Origin : FileAccessService-{errorOrigin}]");
                 }
 
-                return File.ReadAllText(path);
+                // Decrypt, Read, Encrypt
+                await FileEncryptionService.DecryptFileAsync(inputFile: path, outputFile: path);
+                string fileContent = File.ReadAllText(path);
+                await FileEncryptionService.EncryptFileAsync(inputFile: path, outputFile: path);
+
+                return fileContent;
+            }
+            finally
+            {
+                FileSemaphore.Release();
             }
         }
 
-        public static void WriteFile(string path, string content, string origin)
+        public static async Task WriteFileAsync(string path, string content, string origin)
         {
-            lock (FileLock)
+            await FileSemaphore.WaitAsync();
+            try
             {
+                // Decrypt the file before writing.
+                await FileEncryptionService.DecryptFileAsync(inputFile: path, outputFile: path);
                 File.WriteAllText(path, content);
+                // Encrypt the file after writing.
+                await FileEncryptionService.EncryptFileAsync(inputFile: path, outputFile: path);
+            }
+            finally
+            {
+                FileSemaphore.Release();
             }
         }
 

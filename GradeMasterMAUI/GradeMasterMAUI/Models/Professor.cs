@@ -62,7 +62,7 @@ namespace GradeMasterMAUI.Models
             
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, Firstname, Lastname, Salary);
-            FileAccessService.WriteFile(SaveFilename, data, origin: "Professor-Pack");
+            FileAccessService.WriteFileAsync(SaveFilename, data, origin: "Professor-Pack");
         }
 
 
