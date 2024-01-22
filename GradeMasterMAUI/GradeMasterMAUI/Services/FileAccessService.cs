@@ -6,12 +6,12 @@ namespace GradeMasterMAUI.Services
 {
     public static class FileAccessService
     {
-        private static readonly object FileLock = new();
+        //private static readonly object FileLock = new();
 
         public static string ReadFile(string path, string errorOrigin)
         {
-            lock (FileLock)
-            {
+            //lock (FileLock)
+            //{
                 Config.EnsureDirectory();
                 if (!File.Exists(path))
                 {
@@ -20,25 +20,25 @@ namespace GradeMasterMAUI.Services
 
                 string encryptedContent = File.ReadAllText(path);
                 return FileEncryptionService.DecryptText(encryptedContent);
-            }
+            //}
         }
 
         public static void WriteFile(string path, string content, string identifier, string errorOrigin)
         {
-            lock (FileLock)
-            {
+            //lock (FileLock)
+            //{
                 Config.EnsureDirectory();
-                string directory = Path.GetDirectoryName(path);
-                string filenameWithoutExtension = Path.GetFileNameWithoutExtension(path);
-                string extension = Path.GetExtension(path);
+                //string directory = Path.GetDirectoryName(path);
+                //string filenameWithoutExtension = Path.GetFileNameWithoutExtension(path);
+                //string extension = Path.GetExtension(path);
 
-                // Append the identifier to the filename
-                string newFileName = $"{filenameWithoutExtension}.{identifier}{extension}";
-                string newPath = Path.Combine(directory, newFileName);
+                //// Append the identifier to the filename
+                //string newFileName = $"{filenameWithoutExtension}.{identifier}{extension}";
+                //string newPath = Path.Combine(directory, newFileName);
 
                 string encryptedContent = FileEncryptionService.EncryptText(content);
-                File.WriteAllText(newPath, encryptedContent);
-            }
+                File.WriteAllText(path, encryptedContent);
+            //}
         }
     }
 

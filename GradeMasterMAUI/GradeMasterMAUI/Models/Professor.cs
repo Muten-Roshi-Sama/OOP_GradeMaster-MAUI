@@ -12,6 +12,8 @@ namespace GradeMasterMAUI.Models
     public class Professor : Person
     {
         private int salary; //good practice to use private, use a get function for reading the value. Now its protected from involuntary changes to salary.
+        private static HashSet<string> processedProfessorFiles = new HashSet<string>();
+
         private static List<Professor> ProfessorList = new List<Professor>(); //static: single list for all instances.
 
         public Professor(string firstname, string lastname, int salary)
@@ -25,8 +27,6 @@ namespace GradeMasterMAUI.Models
         //---Packing---
         public static Professor Unpack(string filename)
         {
-                    
-            
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
             //Debug.WriteLine($"prof file name : {SaveFilename}");
             string content = FileAccessService.ReadFile(SaveFilename, errorOrigin: "Professor-Unpack"); //reads content of txt
@@ -43,19 +43,21 @@ namespace GradeMasterMAUI.Models
 
         public static void UnpackAll()
         {
-            ProfessorList = [];
             Config.EnsureDirectory();
-            IEnumerable<Professor> Allprofessors = Directory
-                .EnumerateFiles(Config.Dir, "*.Professor.txt") //get a list of file names with extension *.student.txt
-                .Select(filename => Professor.Unpack(Path.GetFileName(filename))) //deserialize each instance
-                .OrderBy(professor => professor.DisplayName);
-            foreach (var prof in Allprofessors)
+            var professorFiles = Directory.EnumerateFiles(Config.Dir, "*.Professor.txt");
+
+            foreach (var file in professorFiles)
             {
-                ProfessorList.Add(prof);
-                //Debug.WriteLine($"filename : {filename}");
+                string fileName = Path.GetFileName(file);
+                if (!processedProfessorFiles.Contains(fileName))
+                {
+                    var professor = Professor.Unpack(fileName);
+                    ProfessorList.Add(professor);
+                    // Debug.WriteLine($"filename : {fileName}");
+                    processedProfessorFiles.Add(fileName);
+                }
             }
         }
-        //public void 
 
         public void Pack()
         {

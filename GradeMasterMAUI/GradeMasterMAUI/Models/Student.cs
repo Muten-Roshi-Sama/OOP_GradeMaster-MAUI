@@ -85,7 +85,7 @@ namespace GradeMasterMAUI.Models
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string content = string.Format("{1}{0}{2}", Environment.NewLine, Firstname, Lastname);
             //FileAccessService.WriteFile(SaveFilename, data, errorOrigin:"Student-Pack");
-            FileAccessService.WriteFile(SaveFilename, content, identifier: "Eval", errorOrigin: "Student-Pack");
+            FileAccessService.WriteFile(SaveFilename, content, identifier: "Student", errorOrigin: "Student-Pack");
         }
 
 
