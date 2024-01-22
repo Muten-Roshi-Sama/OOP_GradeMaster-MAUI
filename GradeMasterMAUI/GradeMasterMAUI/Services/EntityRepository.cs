@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using GradeMasterMAUI.Models;
 
 namespace GradeMasterMAUI.Services
 {
@@ -25,6 +26,10 @@ namespace GradeMasterMAUI.Services
             }
             return items;
         }
-    }
 
+        public static async Task PackAsync<T>(T entity, Func<T, Task> packFunction)
+        {
+            await packFunction(entity);
+        }
+    }
 }

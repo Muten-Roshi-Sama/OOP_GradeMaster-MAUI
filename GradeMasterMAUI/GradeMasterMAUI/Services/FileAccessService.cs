@@ -11,17 +11,21 @@ namespace GradeMasterMAUI.Services
     {
         private static readonly object FileLock = new();
 
-        public static string ReadFile(string path, string origin)
+        public static string ReadFile(string path, string errorOrigin)
         {
             lock (FileLock)
             {
                 Config.EnsureDirectory();
                 if (!File.Exists(path))
                 {
-                    throw new FileNotFoundException($"The file at {path} was not found.[Origin : FileAccessService-{origin}]");
+                    throw new FileNotFoundException($"The file at {path} was not found.[Origin : FileAccessService-{errorOrigin}]");
                 }
 
-                return File.ReadAllText(path);
+                //FileEncryptionService.EncryptFileAsync(inputFile: path, outputFile: path);
+                //string file = 
+                //FileEncryptionService.DecryptFileAsync(inputFile: path, outputFile: path);
+
+                return File.ReadAllText(path); ;
             }
         }
 
@@ -29,7 +33,9 @@ namespace GradeMasterMAUI.Services
         {
             lock (FileLock)
             {
+                //FileEncryptionService.EncryptFileAsync(inputFile: path, outputFile: path);
                 File.WriteAllText(path, content);
+                //FileEncryptionService.DecryptFileAsync(inputFile: path, outputFile: path);
             }
         }
 
