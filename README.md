@@ -27,7 +27,9 @@ The application provides an intuitive interface for educational institutions to 
 
 
 ### Sequence Diagrams
-![image](https://github.com/Muten-Roshi-Sama/OOP_GradeMaster-MAUI/assets/131618669/354e0534-e9c2-49a6-9eef-a9f967606f12)
+![image](https://github.com/Muten-Roshi-Sama/OOP_GradeMaster-MAUI/assets/131618669/d31cbcd6-2baa-4573-b16a-0937c8c1d92c)
+
+
 ![image](https://github.com/Muten-Roshi-Sama/OOP_GradeMaster-MAUI/assets/131618669/eaa5be91-1759-4cc0-baf4-af9f6d4773e0)
 
 
