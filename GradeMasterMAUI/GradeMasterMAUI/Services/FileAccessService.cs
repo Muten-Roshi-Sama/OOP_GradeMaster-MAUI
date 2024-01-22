@@ -23,12 +23,21 @@ namespace GradeMasterMAUI.Services
             }
         }
 
-        public static void WriteFile(string path, string content, string errorOrigin)
+        public static void WriteFile(string path, string content, string identifier, string errorOrigin)
         {
             lock (FileLock)
             {
+                Config.EnsureDirectory();
+                string directory = Path.GetDirectoryName(path);
+                string filenameWithoutExtension = Path.GetFileNameWithoutExtension(path);
+                string extension = Path.GetExtension(path);
+
+                // Append the identifier to the filename
+                string newFileName = $"{filenameWithoutExtension}.{identifier}{extension}";
+                string newPath = Path.Combine(directory, newFileName);
+
                 string encryptedContent = FileEncryptionService.EncryptText(content);
-                File.WriteAllText(path, encryptedContent);
+                File.WriteAllText(newPath, encryptedContent);
             }
         }
     }

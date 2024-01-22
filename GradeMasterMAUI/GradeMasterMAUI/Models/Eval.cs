@@ -79,7 +79,7 @@ namespace GradeMasterMAUI.Models
             try
             {
                 EvalList = new List<Eval>();
-                //Config.EnsureDirectory();
+                Config.EnsureDirectory();
                 IEnumerable<Eval> AllEvals = Directory
                     .EnumerateFiles(Config.Dir, "*.Eval.txt") //get a list of file names with extension *.student.txt
                     .Select(filename => Eval.Unpack(Path.GetFileName(filename))) //deserialize each instance
@@ -107,8 +107,9 @@ namespace GradeMasterMAUI.Models
         public void Pack()
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
-            string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, eval, StudentFile, ActivityFile);
-            FileAccessService.WriteFile(SaveFilename, data, errorOrigin: "Eval-Pack");
+            string content = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, eval, StudentFile, ActivityFile);
+            //FileAccessService.WriteFile(SaveFilename, data, errorOrigin: "Eval-Pack");
+            FileAccessService.WriteFile(SaveFilename, content, identifier: "Eval", errorOrigin: "Eval-Pack");
         }
 
 

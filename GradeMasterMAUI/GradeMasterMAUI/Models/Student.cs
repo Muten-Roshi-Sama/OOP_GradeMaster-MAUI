@@ -69,6 +69,7 @@ namespace GradeMasterMAUI.Models
         public static void UnpackAll()
         {
             StudentList = new List<Student>();
+            Config.EnsureDirectory();
             IEnumerable<Student> Allstudents = Directory
                 .EnumerateFiles(Config.Dir, "*.Student.txt") //get a list of file names with extension *.student.txt
                 .Select(filename => Student.Unpack(Path.GetFileName(filename))) //deserialize each instance
@@ -82,8 +83,9 @@ namespace GradeMasterMAUI.Models
         public void Pack()
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
-            string data = string.Format("{1}{0}{2}", Environment.NewLine, Firstname, Lastname);
-            FileAccessService.WriteFile(SaveFilename, data, errorOrigin:"Student-Pack");
+            string content = string.Format("{1}{0}{2}", Environment.NewLine, Firstname, Lastname);
+            //FileAccessService.WriteFile(SaveFilename, data, errorOrigin:"Student-Pack");
+            FileAccessService.WriteFile(SaveFilename, content, identifier: "Eval", errorOrigin: "Student-Pack");
         }
 
 

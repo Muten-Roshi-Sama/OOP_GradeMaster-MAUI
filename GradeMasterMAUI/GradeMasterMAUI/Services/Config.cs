@@ -22,14 +22,10 @@ namespace GradeMasterMAUI.Services
             if (!Directory.Exists(Dir))
             {
                 Directory.CreateDirectory(Dir);
-                EnsureEncryptionKey();
+                FileEncryptionService.InitializeEncryptionKey();
             }
         }
 
-        // Check if an encryption key exists and create one if not
-        private static async Task EnsureEncryptionKey()
-        {            
-                await FileEncryptionService.GenerateAndStoreAesKey();
-        }
+        
     }
 }

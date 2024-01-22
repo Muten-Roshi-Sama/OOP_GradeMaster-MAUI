@@ -62,8 +62,8 @@ namespace GradeMasterMAUI.Models
             //{}
                 try
                 {
-                    ActivityList = new List<Activity>();
-                    //Config.EnsureDirectory();
+                    ActivityList = [];
+                    Config.EnsureDirectory();
                     IEnumerable<Activity> Allactivities = Directory
                         .EnumerateFiles(Config.Dir, "*.Activity.txt") //get a list of file names with extension *.student.txt
                         .Select(filename => Activity.Unpack(Path.GetFileName(filename))) //deserialize each instance
@@ -91,8 +91,9 @@ namespace GradeMasterMAUI.Models
         public void Pack()
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
-            string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, ActivityName, ProfessorFile, ECTS);
-            FileAccessService.WriteFile(SaveFilename, data, errorOrigin: "Activity-Pack");
+            string content = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, ActivityName, ProfessorFile, ECTS);
+            //FileAccessService.WriteFile(SaveFilename, data, errorOrigin: "Activity-Pack");
+            FileAccessService.WriteFile(SaveFilename, content, identifier: "Activity", errorOrigin: "Activity-Pack");
         }
 
 
