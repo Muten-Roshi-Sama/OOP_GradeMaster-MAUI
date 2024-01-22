@@ -54,7 +54,7 @@ namespace GradeMasterMAUI.Models
         {
             
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
-            string content = FileAccessService.ReadFile(SaveFilename, origin:"Student-Unpack"); //reads content of txt
+            string content = FileAccessService.ReadFile(SaveFilename, errorOrigin: "Student-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
             Student student = new Student(firstname: tokens[0], lastname: tokens[1]);
             student.FileName = filename;
@@ -83,7 +83,7 @@ namespace GradeMasterMAUI.Models
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}", Environment.NewLine, Firstname, Lastname);
-            FileAccessService.WriteFileAsync(SaveFilename, data, origin:"Student-Pack");
+            FileAccessService.WriteFile(SaveFilename, data, errorOrigin:"Student-Pack");
         }
 
 

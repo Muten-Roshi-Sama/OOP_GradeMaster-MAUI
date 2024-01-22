@@ -2,96 +2,79 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Maui.Storage;
 
-namespace GradeMasterMAUI.Services
+public static class FileEncryptionService
 {
-    public static class FileEncryptionService
+    private static readonly string KeyName = "AesEncryptionKey";
+
+    public static void InitializeEncryptionKey()
     {
-        private static readonly string aesKeyName = "aesEncryptionKey";
-
-        public static async Task EncryptFileAsync(string inputFile, string outputFile)
+        if (SecureStorage.GetAsync(KeyName).Result == null)
         {
-            // Retrieve the stored AES key or create a new one if it doesn't exist
-            string aesKeyBase64 = await SecureStorage.GetAsync(aesKeyName) ?? await GenerateAndStoreAesKey();
-
-            byte[] aesKey = Convert.FromBase64String(aesKeyBase64);
-
-            using (Aes aesAlg = Aes.Create())
+            using (var aes = Aes.Create())
             {
-                aesAlg.Key = aesKey;
-                aesAlg.GenerateIV();
-
-                // Create an encryptor to perform the stream transform
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                // Create the streams used for encryption
-                using (FileStream outputFileStream = new FileStream(outputFile, FileMode.Create))
-                {
-                    // Prepend the IV to the file
-                    outputFileStream.Write(aesAlg.IV, 0, aesAlg.IV.Length);
-
-                    using (CryptoStream csEncrypt = new CryptoStream(outputFileStream, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (FileStream inputFileStream = new FileStream(inputFile, FileMode.Open))
-                        {
-                            inputFileStream.CopyTo(csEncrypt);
-                        }
-                    }
-                }
+                aes.GenerateKey();
+                string base64Key = Convert.ToBase64String(aes.Key);
+                SecureStorage.SetAsync(KeyName, base64Key).Wait();
             }
         }
+    }   //TODO: add this to Config.EnsureDir()
 
-        public static async Task DecryptFileAsync(string inputFile, string outputFile)
+    private static byte[] GetAesKey()
+    {
+        string base64Key = SecureStorage.GetAsync(KeyName).Result;
+        return Convert.FromBase64String(base64Key);
+    }
+
+    public static string EncryptText(string text)
+    {
+        byte[] key = GetAesKey();
+        using (var aes = Aes.Create())
         {
-            string aesKeyBase64 = await SecureStorage.GetAsync(aesKeyName);
-            if (aesKeyBase64 == null)
+            aes.Key = key;
+            ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+
+            using (var ms = new MemoryStream())
             {
-                throw new InvalidOperationException("The AES key was not found in secure storage.");
-            }
-
-            byte[] aesKey = Convert.FromBase64String(aesKeyBase64);
-
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.Key = aesKey;
-
-                // Read the IV from the file
-                byte[] iv = new byte[aesAlg.BlockSize / 8];
-                using (FileStream inputFileStream = new FileStream(inputFile, FileMode.Open))
+                using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                using (var sw = new StreamWriter(cs))
                 {
-                    inputFileStream.Read(iv, 0, iv.Length);
-                    aesAlg.IV = iv;
-
-                    // Create a decryptor to perform the stream transform
-                    ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                    using (CryptoStream csDecrypt = new CryptoStream(inputFileStream, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (FileStream outputFileStream = new FileStream(outputFile, FileMode.Create))
-                        {
-                            csDecrypt.CopyTo(outputFileStream);
-                        }
-                    }
+                    sw.Write(text);
                 }
-            }
-        }
 
-        public static async Task<string> GenerateAndStoreAesKey()
-        {
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.GenerateKey();
-                string aesKeyBase64 = Convert.ToBase64String(aesAlg.Key);
-                await SecureStorage.SetAsync(aesKeyName, aesKeyBase64);
-                return aesKeyBase64;
+                byte[] iv = aes.IV;
+                byte[] encrypted = ms.ToArray();
+                byte[] result = new byte[iv.Length + encrypted.Length];
+                Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
+                Buffer.BlockCopy(encrypted, 0, result, iv.Length, encrypted.Length);
+
+                return Convert.ToBase64String(result);
             }
         }
     }
 
+    public static string DecryptText(string cipherText)
+    {
+        byte[] fullCipher = Convert.FromBase64String(cipherText);
+        byte[] iv = new byte[16];
+        byte[] cipher = new byte[fullCipher.Length - iv.Length];
+
+        Buffer.BlockCopy(fullCipher, 0, iv, 0, iv.Length);
+        Buffer.BlockCopy(fullCipher, iv.Length, cipher, 0, cipher.Length);
+
+        using (var aes = Aes.Create())
+        {
+            aes.Key = GetAesKey();
+            aes.IV = iv;
+            ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+            using (var ms = new MemoryStream(cipher))
+            using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+            using (var sr = new StreamReader(cs))
+            {
+                return sr.ReadToEnd();
+            }
+        }
+    }
 }
-
-
-
-

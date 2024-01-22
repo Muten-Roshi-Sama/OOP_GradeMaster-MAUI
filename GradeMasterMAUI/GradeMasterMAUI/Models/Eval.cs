@@ -59,7 +59,7 @@ namespace GradeMasterMAUI.Models
         public static Eval Unpack(string filename)
         {
             var SaveFilename = Path.Combine(Config.Dir, filename); //constructs the full path to the file 
-            string content = FileAccessService.ReadFileAsync(SaveFilename, origin: "Eval-Unpack"); //reads content of txt
+            string content = FileAccessService.ReadFile(SaveFilename, errorOrigin: "Eval-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
 
             Eval eval = new(eval: Convert.ToInt32(tokens[0]), studentFile: tokens[1], activityFile: tokens[2])
@@ -108,7 +108,7 @@ namespace GradeMasterMAUI.Models
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, eval, StudentFile, ActivityFile);
-            FileAccessService.WriteFileAsync(SaveFilename, data, origin: "Eval-Pack");
+            FileAccessService.WriteFile(SaveFilename, data, errorOrigin: "Eval-Pack");
         }
 
 

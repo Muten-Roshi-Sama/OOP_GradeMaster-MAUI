@@ -40,7 +40,7 @@ namespace GradeMasterMAUI.Models
             //Debug.WriteLine($"Full path to file: {SaveFilename}");
 
 
-            string content = FileAccessService.ReadFileAsync(path:SaveFilename, errorOrigin: "Activity-Unpack"); //reads content of txt
+            string content = FileAccessService.ReadFile(path:SaveFilename, errorOrigin: "Activity-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
             //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens)}");
             var filePathToken = tokens[1];
@@ -92,7 +92,7 @@ namespace GradeMasterMAUI.Models
         {
             var SaveFilename = Path.Combine(Config.Dir, FileName);
             string data = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, ActivityName, ProfessorFile, ECTS);
-            FileAccessService.WriteFileAsync(SaveFilename, data, origin: "Activity-Pack");
+            FileAccessService.WriteFile(SaveFilename, data, errorOrigin: "Activity-Pack");
         }
 
 
