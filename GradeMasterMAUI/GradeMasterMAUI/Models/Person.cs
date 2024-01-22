@@ -10,19 +10,16 @@ namespace GradeMasterMAUI.Models
 {
     public class Person
     {
-
-        public string personID;
         private string fileName;
         private string firstname;
         private string lastname;
 
 
-        public Person(string firstname, string lastname, string personID = "0")
+        public Person(string firstname, string lastname)
         {
             
             this.firstname = firstname;
             this.lastname = lastname;
-            this.personID = personID;
         }
 
         public string Firstname

@@ -45,10 +45,6 @@ namespace GradeMasterMAUI.Models
             }
         }
 
-
-
-
-
         //---Packing---
         public static Student Unpack(string filename)
         {
@@ -103,26 +99,7 @@ namespace GradeMasterMAUI.Models
         {
             studentEvals.Add(eval);
         }
-        //public string PersonID
-        //{
-        //    get { return personID; }
-        //}
-
-        //public double GetAverage()
-        //{
-        //    int ECTSsum = 0;
-        //    int pointsTotal = 0;
-        //    int EvalCount = 0;
-        //    foreach (Eval eval in StudentEvals)
-        //    {
-        //        EvalCount += 1;
-        //        ECTSsum += eval.Activity.ECTS;
-        //        pointsTotal += eval.Note() * eval.activity.ECTS;
-        //    }
-        //    // Use double for the division to get a decimal result
-        //    double activityAverage = (double)pointsTotal / EvalCount;
-        //    return activityAverage / ECTSsum;
-        //}
+        
     }
 
 }

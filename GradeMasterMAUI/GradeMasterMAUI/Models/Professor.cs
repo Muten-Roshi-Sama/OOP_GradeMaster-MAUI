@@ -45,7 +45,6 @@ namespace GradeMasterMAUI.Models
         {
             Config.EnsureDirectory();
             ProfessorList = new List<Professor>();
-            Config.EnsureDirectory();
             IEnumerable<Professor> Allprofessors = Directory
                 .EnumerateFiles(Config.Dir, "*.Professor.txt") //get a list of file names with extension *.student.txt
                 .Select(filename => Professor.Unpack(Path.GetFileName(filename))) //deserialize each instance
