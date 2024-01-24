@@ -38,6 +38,7 @@ public partial class ManageProfessors : ContentPage, INotifyPropertyChanged
             firstnameEntry.Text = string.Empty;
             lastnameEntry.Text = string.Empty;
             salaryEntry.Text = string.Empty;
+            errorLabel.IsVisible = false;
         }
         catch (FormatException)
         {

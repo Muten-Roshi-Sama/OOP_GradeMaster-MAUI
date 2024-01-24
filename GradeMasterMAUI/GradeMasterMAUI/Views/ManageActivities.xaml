@@ -8,7 +8,6 @@
         <StackLayout Padding="20" Spacing="20">
 
             <Label Text="Activities List" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
-
             <Frame CornerRadius="15" Padding="15" BackgroundColor="#252526" HasShadow="True">
                 <!-- Column Headers -->
                 <VerticalStackLayout>
@@ -44,8 +43,11 @@
                         ItemsSource="{Binding ProfessorList}"
                         ItemDisplayBinding="{Binding DisplayName}"
                         SelectedIndexChanged="OnPickerSelectionChanged"/>
-                            
 
+                    <Label x:Name="errorLabel"
+                           TextColor="Red"
+                           FontAttributes="Bold"
+                           IsVisible="False" />
                     <Entry x:Name="ectsEntry" Placeholder="ECTS" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
                     
                     <Button Text="Add Activity" Clicked="OnAddActivityClicked" 

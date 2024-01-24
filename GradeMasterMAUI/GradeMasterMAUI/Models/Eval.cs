@@ -25,21 +25,21 @@ namespace GradeMasterMAUI.Models
             fileName = $"{Path.GetRandomFileName()}.Eval.txt";
         }
 
-        //public void Note(string appr)
-        //{//type 2 : N(=4), C(=8), B(=12), TB(=16), X(=20)
-        //    this.eval = appr switch
-        //    {
-        //        "X" => 20,
-        //        "TB" => 16,
-        //        "B" => 12,
-        //        "C" => 8,
-        //        "N" => 4,
-        //        _ => 0,
-        //    };
-        //}
-        
+        public static int Note(string appr)
+        {//type 2 : N(=4), C(=8), B(=12), TB(=16), X(=20)
+            return appr switch
+            {
+                "X" => 20,
+                "TB" => 16,
+                "B" => 12,
+                "C" => 8,
+                "N" => 4,
+                _ => 0,
+            };
+        }
 
-       
+
+
         //---Packing---
         public static Eval Unpack(string filename)
         {

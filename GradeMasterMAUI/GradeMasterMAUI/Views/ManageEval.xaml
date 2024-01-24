@@ -36,6 +36,10 @@
 
             <Frame CornerRadius="15" Padding="20" BackgroundColor="#252526" HasShadow="True">
                 <StackLayout>
+                    <Label x:Name="pickerErrorLabel"
+                           TextColor="Red"
+                           FontAttributes="Bold"
+                           IsVisible="False" />
                     <Picker Title="Select a Student"
                             x:Name="studentPicker"
                             ItemsSource="{Binding StudentList}"

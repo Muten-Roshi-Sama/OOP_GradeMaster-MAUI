@@ -14,8 +14,8 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
     //public static List<AllEvalList> EvaluationsList => AllEvalList.GetEvaluationsList();
     public List<Eval> EvalList => Eval.GetEvalList(); //CANNOT be static ?? //TODO
 
-    private Student _selectedStudent;
-    private Activity _selectedActivity;
+    private Student? _selectedStudent;
+    private Activity? _selectedActivity;
     //private Eval _selectedEval;
 
 
@@ -64,31 +64,50 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
     
     private void OnAddEvalClicked(object sender, EventArgs e)
     {
-        string activityFile = _selectedActivity.GetFileName;
-        string studentFile = _selectedStudent.GetFileName;
-        Debug.WriteLine($"[ManageEval] activityFile is : {activityFile}");
-        Debug.WriteLine($"[ManageEval] studentFile is : {studentFile}");
-
         try
         {
-            var eval = Convert.ToInt32(evalEntry.Text);
-            if (eval >= 0 && eval <= 20)
+            // Check if _selectedActivity and _selectedStudent are not null
+            //if (_selectedActivity == null || _selectedStudent == null)
+            //{
+            //    throw new NullReferenceException("Activity or Student not selected.");
+            //}
+
+            string activityFile = _selectedActivity.GetFileName;
+            string studentFile = _selectedStudent.GetFileName;
+            string eval = evalEntry.Text;
+            int numericalEval;
+                        //Debug.WriteLine($"[ManageEval] activityFile is : {activityFile}");
+                        //Debug.WriteLine($"[ManageEval] studentFile is : {studentFile}");
+
+            if (eval == "X"||eval=="TB"||eval=="B"||eval=="C"||eval=="N")
             {
-                var newEval = new Eval(eval: eval, studentFile: studentFile, activityFile: activityFile);
-                //new AllEvalList(_selectedStudent, eval);
-                //_selectedEval = newEval;
-                //Eval(int eval, string studentFile, string activityFile)
-                newEval.Pack(); // Save the new student
-                Debug.WriteLine("New Eval Added ! [OnAddEvalClicked]");
-                errorLabel.IsVisible = false;
+                numericalEval = Eval.Note(eval);
             }
             else
             {
-                errorLabel.Text = "[Error] Please enter a valid integer for evaluation.";
-                errorLabel.IsVisible = true;
-                //Clear Form
-                evalEntry.Text = string.Empty;
+                numericalEval = Convert.ToInt32(evalEntry.Text);
             }
+
+            if (numericalEval < 0 || numericalEval > 20)
+            {throw new FormatException("Evaluation score must be between 0 and 20.");}
+
+
+            var newEval = new Eval(eval: numericalEval, studentFile: studentFile, activityFile: activityFile);
+            newEval.Pack(); // Save the new student
+            Debug.WriteLine("New Eval Added ! [OnAddEvalClicked]");
+
+            // Reset Labels
+            errorLabel.IsVisible = false;
+            pickerErrorLabel.IsVisible = false;
+            evalEntry.Text = string.Empty;
+
+            activityPicker.SelectedItem = null; // Replace 'activityPicker' with your actual picker's name
+            studentPicker.SelectedItem = null;
+            _selectedActivity = null; // Also reset the backing variable
+            _selectedStudent = null;
+            studentFile = null;
+            activityFile = null;
+
         }
         catch (FormatException)
         {
@@ -96,6 +115,12 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
             errorLabel.Text = "[Error] Please enter a valid integer for evaluation.";
             errorLabel.IsVisible = true;
             evalEntry.Text = string.Empty;
+            
+        }
+        catch (NullReferenceException)
+        {
+            pickerErrorLabel.Text = "Please pick a valid Activity and Student.";
+            pickerErrorLabel.IsVisible = true;
         }
         catch (Exception ex)
         {

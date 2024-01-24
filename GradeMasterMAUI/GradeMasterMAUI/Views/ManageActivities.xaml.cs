@@ -11,7 +11,10 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
 {
     public List<Activity> ActivityList => Activity.GetActivityList(); //CANNOT be static
     public List<Professor> ProfessorList => Professor.GetProfessorList();
+
     private Professor selectedProf;
+
+
     public ManageActivities()
 	{
 		InitializeComponent();
@@ -41,39 +44,48 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
             Debug.WriteLine($"[ManageActivities] SelectedProf is {selectedProfessor.DisplayName}");
         }
     }
-    //public Professor SelectedProf
-    //{
-    //    get => selectedProf;
-    //    set
-    //    {
-    //        if (selectedProf != value)
-    //        {
-    //            selectedProf = value;
-    //        }
-    //    }
-    //}
 
 
     private void OnAddActivityClicked(object sender, EventArgs e)
     {
         string professorFile = selectedProf.GetFileName;
-        Debug.WriteLine($"[ManageActivities] professorFile is : {professorFile}");
+        //Debug.WriteLine($"[ManageActivities] professorFile is : {professorFile}");
         if (professorFile == null)
         {
-            Debug.WriteLine("[ManageActivities] professorFile is null !");
+            Debug.WriteLine("[OnAddActivityClicked] professorFile is null !");
             return;
         }
-        var newActivity = new Activity(activityNameEntry.Text, professorFile, Convert.ToInt32(ectsEntry.Text));
-        newActivity.Pack(); // Save the new student
-        Debug.WriteLine("[ManageActivities] New Activity Added !");
-        //Update Data
-        Activity.UnpackAll();
-        OnPropertyChanged(nameof(ActivityList));
-        DataChangedNotifier.NotifyDataChanged();
 
-        //Clear Form
-        activityNameEntry.Text = string.Empty;
-        ectsEntry.Text = string.Empty;
+        try
+        {
+            var newActivity = new Activity(activityNameEntry.Text, professorFile, Convert.ToInt32(ectsEntry.Text));
+            newActivity.Pack(); // Save the new student
+            Debug.WriteLine("[OnAddActivityClicked] New Activity Added !");
+            //Update Data
+            Activity.UnpackAll();
+            OnPropertyChanged(nameof(ActivityList));
+            DataChangedNotifier.NotifyDataChanged();
+
+            //Clear Form
+            activityNameEntry.Text = string.Empty;
+            ectsEntry.Text = string.Empty;
+            errorLabel.IsVisible = false;
+        }
+        catch (FormatException)
+        {
+            // Handle the case where the input is not a valid integer
+            errorLabel.Text = "[Error] Please enter a valid integer for ECTS.";
+            errorLabel.IsVisible = true;
+            ectsEntry.Text = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            // Handle other types of exceptions
+            errorLabel.Text = $"[Error] Unexpected error: {ex.Message}";
+            errorLabel.IsVisible = true;
+            ectsEntry.Text = string.Empty;
+        }
+
 
 
     }
