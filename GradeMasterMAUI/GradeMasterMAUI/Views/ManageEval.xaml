@@ -50,10 +50,11 @@
                             ItemsSource="{Binding ActivityList}"
                             ItemDisplayBinding="{Binding DisplayName}"
                             SelectedIndexChanged="OnActivityPickerSelectionChanged"/>
-                    <Label x:Name="errorLabel"
-                           TextColor="Red"
-                           FontAttributes="Bold"
-                           IsVisible="False" />
+
+                    <Label Text="Insert Cote[0-20] or appreciation[X, TB, B, C, N]." 
+                           FontSize="Medium"/>
+
+                    <Label x:Name="errorLabel" TextColor="Red" FontAttributes="Bold" IsVisible="False" />
                     <Entry x:Name="evalEntry" Placeholder="[0-20]" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
                     <!--<Picker x:Name="professorPicker" SelectedIndexChanged="OnProfessorSelectedIndexChanged" TextColor="White" FontSize="Medium"/>-->
                     
