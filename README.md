@@ -10,8 +10,23 @@ The application provides an intuitive interface for educational institutions to 
 - **Manage Activities:** Create and organize educational activities within the system.
 - **Link Activities to Teachers:** Associate activities with responsible teachers for efficient organization.
 - **Record Evaluations:** Keep track of student evaluations, including grades.
-- **Save Data:** Utilize a reliable data-saving mechanism to preserve information for future use.
+- **Save Data Locally:** Utilize a reliable data-saving mechanism to preserve information for future use.
 - **Generate Student Reports:** View and print student reports to assess academic performance.
+
+## Getting Started
+
+### Prerequisites
+- Make sure that the Common Language Runtime Exceptions option is not set to break when thrown. Handling error with inputs sometimes throw exceptions that interrupts the code, those are correctly handled. Your IDE should have an option to deactivate this feature.
+- All files are encrypted and saved into a .GradeMasterMAUI folder in your User folder. The creation of this .folder also creates and stores Securely your AES key. When starting a new instance of the application, make sure to not have this .GradeMasterMAUI folder, or delete it.
+-  [.NET MAUI 8.0](https://dotnet.microsoft.com/apps/maui) must be installed on your development machine.
+
+### Documentation
+For more detailed information, check the Documentation folder. It includes:
+- Class Diagram
+- Sequence Diagram
+- SOLID Principles Explanation
+
+
 
 ## SOLID Principles
 - **Single Responsibility Principle (SRP):** SRP states that a class should have only one reason to change, meaning it should have only one job or responsibility. 
@@ -27,24 +42,13 @@ The application provides an intuitive interface for educational institutions to 
 
 
 ### Sequence Diagrams
+
 ![image](https://github.com/Muten-Roshi-Sama/OOP_GradeMaster-MAUI/assets/131618669/d31cbcd6-2baa-4573-b16a-0937c8c1d92c)
 
 
 ![image](https://github.com/Muten-Roshi-Sama/OOP_GradeMaster-MAUI/assets/131618669/eaa5be91-1759-4cc0-baf4-af9f6d4773e0)
 
 
-
-## Getting Started
-
-### Prerequisites
-- [.NET MAUI 8.0](https://dotnet.microsoft.com/apps/maui) must be installed on your development machine.
-- Make sure that the Common Language Runtime Exceptions option is not set to break when thrown. Handling error with inputs sometimes throw exceptions that interrupts the code, those are correctly handled. Your IDE should have an option to deactivate this feature. 
-
-### Documentation
-For more detailed information, check the Documentation folder. It includes:
-- Class Diagram
-- Sequence Diagram
-- SOLID Principles Explanation
 
 ## Contributing
 
