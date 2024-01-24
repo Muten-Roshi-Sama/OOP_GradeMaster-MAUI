@@ -55,7 +55,7 @@
                            FontSize="Small" TextColor="Grey"/>
 
                     <Label x:Name="errorLabel" TextColor="Red" FontAttributes="Bold" IsVisible="False" />
-                    <Entry x:Name="evalEntry" Placeholder="[0-20]" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
+                    <Entry x:Name="evalEntry" TextColor="White" FontSize="Medium"/>
                     <!--<Picker x:Name="professorPicker" SelectedIndexChanged="OnProfessorSelectedIndexChanged" TextColor="White" FontSize="Medium"/>-->
                     
 
