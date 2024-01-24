@@ -38,6 +38,7 @@ The application provides an intuitive interface for educational institutions to 
 
 ### Prerequisites
 - [.NET MAUI 8.0](https://dotnet.microsoft.com/apps/maui) must be installed on your development machine.
+- Make sure that the Common Language Runtime Exceptions option is not set to break when thrown. Handling error with inputs sometimes throw exceptions that interrupts the code, those are correctly handled. Your IDE should have an option to deactivate this feature. 
 
 ### Documentation
 For more detailed information, check the Documentation folder. It includes:
