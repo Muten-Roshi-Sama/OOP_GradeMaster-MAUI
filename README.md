@@ -1,10 +1,11 @@
 # GradeMasterMAUI
 
 ## Overview
-MAUI-EduManager is a C# MAUI application designed to facilitate educational management tasks. It allows users to create and manage information related to students, teachers, activities, evaluations, and more. 
+MAUI-GradeMaster is a C# MAUI application designed to facilitate educational management tasks. It allows users to create and manage information related to students, teachers, activities, evaluations, and more. 
 The application provides an intuitive interface for educational institutions to streamline their administrative processes.
 
 ## Features
+- **AES Symmetric Encryption:** Unique key generated at application's FIRST initialization and stored in MAUI.SecureStorage.
 - **Create Students and Teachers:** Easily add and manage student and teacher profiles.
 - **Manage Activities:** Create and organize educational activities within the system.
 - **Link Activities to Teachers:** Associate activities with responsible teachers for efficient organization.
@@ -21,10 +22,15 @@ The application provides an intuitive interface for educational institutions to 
   - Example: The Student and Professor classes extending Person should be able to replace Person without affecting the correctness of the program. As long as methods that use Person can use Student or Professor interchangeably, LSP is being followed.
 ## UML Diagrams
 ### Class Diagram
+![image](https://github.com/Muten-Roshi-Sama/OOP_GradeMaster-MAUI/assets/131618669/bb650ca5-0f26-4a61-be53-ddc528640471)
 
 
 
-### Sequence Diagram
+### Sequence Diagrams
+![image](https://github.com/Muten-Roshi-Sama/OOP_GradeMaster-MAUI/assets/131618669/d31cbcd6-2baa-4573-b16a-0937c8c1d92c)
+
+
+![image](https://github.com/Muten-Roshi-Sama/OOP_GradeMaster-MAUI/assets/131618669/eaa5be91-1759-4cc0-baf4-af9f6d4773e0)
 
 
 
