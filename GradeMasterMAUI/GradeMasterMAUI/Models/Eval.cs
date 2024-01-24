@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GradeMasterMAUI.Services;
+﻿using GradeMasterMAUI.Services;
 using System.Diagnostics;
 
 namespace GradeMasterMAUI.Models
 {
-
-
     public class Eval
     {
         private string studentFile;
@@ -32,29 +25,21 @@ namespace GradeMasterMAUI.Models
             fileName = $"{Path.GetRandomFileName()}.Eval.txt";
         }
 
-        public void Note(string appr)
-        {//type 2 : N(=4), C(=8), B(=12), TB(=16), X(=20)
-            this.eval = appr switch
-            {
-                "X" => 20,
-                "TB" => 16,
-                "B" => 12,
-                "C" => 8,
-                "N" => 4,
-                _ => 0,
-            };
-        }
-        public void UpdateGrade(int eval)
-        {
-            this.eval = eval;
-        }
-
+        //public void Note(string appr)
+        //{//type 2 : N(=4), C(=8), B(=12), TB(=16), X(=20)
+        //    this.eval = appr switch
+        //    {
+        //        "X" => 20,
+        //        "TB" => 16,
+        //        "B" => 12,
+        //        "C" => 8,
+        //        "N" => 4,
+        //        _ => 0,
+        //    };
+        //}
         
 
-
-
-
-
+       
         //---Packing---
         public static Eval Unpack(string filename)
         {
@@ -64,7 +49,7 @@ namespace GradeMasterMAUI.Models
 
             Eval eval = new(eval: Convert.ToInt32(tokens[0]), studentFile: tokens[1], activityFile: tokens[2])
             {
-                FileName = filename
+                GetFileName = filename
             };
 
             //Debug.WriteLine($"Eval created: {student.DisplayName} with appreciation {activity.professor}");
@@ -106,7 +91,7 @@ namespace GradeMasterMAUI.Models
         }
         public void Pack()
         {
-            var SaveFilename = Path.Combine(Config.Dir, FileName);
+            var SaveFilename = Path.Combine(Config.Dir, GetFileName);
             string content = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, eval, StudentFile, ActivityFile);
             //FileAccessService.WriteFile(SaveFilename, data, errorOrigin: "Eval-Pack");
             FileAccessService.WriteFile(SaveFilename, content, identifier: "Eval", errorOrigin: "Eval-Pack");
@@ -124,7 +109,7 @@ namespace GradeMasterMAUI.Models
         {
             return EvalList;
         }
-        public string FileName
+        public string GetFileName
         {
             get { return fileName; }
             set { fileName = value; }

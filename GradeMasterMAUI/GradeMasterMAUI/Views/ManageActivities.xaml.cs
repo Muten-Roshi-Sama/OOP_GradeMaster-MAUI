@@ -56,7 +56,7 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
 
     private void OnAddActivityClicked(object sender, EventArgs e)
     {
-        string professorFile = selectedProf.FileName;
+        string professorFile = selectedProf.GetFileName;
         Debug.WriteLine($"[ManageActivities] professorFile is : {professorFile}");
         if (professorFile == null)
         {

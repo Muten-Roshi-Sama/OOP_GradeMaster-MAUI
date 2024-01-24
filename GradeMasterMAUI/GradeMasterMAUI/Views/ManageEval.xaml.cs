@@ -64,8 +64,8 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
     
     private void OnAddEvalClicked(object sender, EventArgs e)
     {
-        string activityFile = _selectedActivity.FileName;
-        string studentFile = _selectedStudent.FileName;
+        string activityFile = _selectedActivity.GetFileName;
+        string studentFile = _selectedStudent.GetFileName;
         Debug.WriteLine($"[ManageEval] activityFile is : {activityFile}");
         Debug.WriteLine($"[ManageEval] studentFile is : {studentFile}");
 
@@ -120,19 +120,5 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
 
 
     }
-
-    //public Student SelectedStudent
-    //{
-    //    get { return _selectedStudent; }
-    //}
-    //public Activity SelectedActivity
-    //{
-    //    get { return _selectedActivity; }
-    //}
-
-    //public Eval SelectedEval
-    //{
-    //    get { return _selectedEval; }
-    //}
 
 }

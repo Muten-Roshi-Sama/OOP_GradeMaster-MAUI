@@ -2,8 +2,6 @@ namespace GradeMasterMAUI.Views;
 using GradeMasterMAUI.Models;
 using GradeMasterMAUI.Services;
 using System.ComponentModel;
-using System.Diagnostics;
-using Activity = Models.Activity;
 public partial class ManageProfessors : ContentPage, INotifyPropertyChanged
 {
     //public ManageProfessors()
@@ -22,18 +20,39 @@ public partial class ManageProfessors : ContentPage, INotifyPropertyChanged
 
     private void OnAddProfessorClicked(object sender, EventArgs e)
     {
-        var newProfessor = new Professor(firstnameEntry.Text, lastnameEntry.Text, Convert.ToInt32(salaryEntry.Text));
-        newProfessor.Pack(); // Save the new student
+        try
+        {
+            var firstname = firstnameEntry.Text;
+            var lastname = lastnameEntry.Text;
+            var salary = Convert.ToInt32(salaryEntry.Text);
 
-        //Update Data
-        Professor.UnpackAll();
-        OnPropertyChanged(nameof(ProfessorList));
+            var newProfessor = new Professor(firstname, lastname, salary);
+            newProfessor.Pack(); // Save the new student
 
-        DataChangedNotifier.NotifyDataChanged();
+            //Update Data
+            Professor.UnpackAll();
+            OnPropertyChanged(nameof(ProfessorList));
 
-        firstnameEntry.Text = string.Empty;
-        lastnameEntry.Text = string.Empty;
-        salaryEntry.Text = string.Empty;
+            DataChangedNotifier.NotifyDataChanged();
+
+            firstnameEntry.Text = string.Empty;
+            lastnameEntry.Text = string.Empty;
+            salaryEntry.Text = string.Empty;
+        }
+        catch (FormatException)
+        {
+            // Handle the case where the input is not a valid integer
+            errorLabel.Text = "[Error] Please enter a valid integer for salary.";
+            errorLabel.IsVisible = true;
+            salaryEntry.Text = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            // Handle other types of exceptions
+            errorLabel.Text = $"[Error] Unexpected error: {ex.Message}";
+            errorLabel.IsVisible = true;
+            salaryEntry.Text = string.Empty;
+        }
 
     }
 

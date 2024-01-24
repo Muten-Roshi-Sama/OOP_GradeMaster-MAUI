@@ -48,7 +48,7 @@ namespace GradeMasterMAUI.Models
 
             Activity activity = new(activityName: tokens[0], professorFile: filePathToken, ects: Convert.ToInt32(tokens[2]))
             {
-                FileName = filename
+                GetFileName = filename
             };
            
             //Debug.WriteLine($"Activity created: {activity.DisplayName} with professor {activity.professor}");
@@ -74,23 +74,15 @@ namespace GradeMasterMAUI.Models
                     }
                 }
                 catch (UnauthorizedAccessException ex)
-                {
-                    // Handle the case when access to a file or directory is denied
-                    Debug.WriteLine($"Access denied [Activity]: {ex.Message}");
-                    // Additional logging or error handling logic can go here
-                }
+                {Debug.WriteLine($"Access denied [Activity]: {ex.Message}");}
                 catch (Exception ex)
-                {
-                    // Handle other types of exceptions
-                    Debug.WriteLine($"An error occurred [Activity]: {ex.Message}");
-                    // Additional logging or error handling logic can go here
-                }
+                {Debug.WriteLine($"An error occurred [Activity]: {ex.Message}");}
             
             
         }
         public void Pack()
         {
-            var SaveFilename = Path.Combine(Config.Dir, FileName);
+            var SaveFilename = Path.Combine(Config.Dir, GetFileName);
             string content = string.Format("{1}{0}{2}{0}{3}", Environment.NewLine, ActivityName, ProfessorFile, ECTS);
             //FileAccessService.WriteFile(SaveFilename, data, errorOrigin: "Activity-Pack");
             FileAccessService.WriteFile(SaveFilename, content, identifier: "Activity", errorOrigin: "Activity-Pack");
@@ -121,7 +113,7 @@ namespace GradeMasterMAUI.Models
         {
             get { return professorFile; }
         }
-        public string FileName
+        public string GetFileName
         {
             get { return fileName; }
             set { fileName = value; }

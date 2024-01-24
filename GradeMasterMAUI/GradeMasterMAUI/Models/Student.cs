@@ -10,17 +10,14 @@ namespace GradeMasterMAUI.Models
 {
     public class Student : Person
     {
-        //possède plusieurs eval
-        //obtenir la moyenne des evals
+        
         private List<Eval> studentEvals = [];
         private static List<Student> StudentList = []; //static: single list for all instances.
-        //private static readonly object _lockObj = new object();
 
-        // Dictionary<Eval> evalDict;
         public Student(string firstname, string lastname)
             : base(firstname, lastname)
         {
-            FileName = $"{Path.GetRandomFileName()}.Student.txt";
+            GetFileName = $"{Path.GetRandomFileName()}.Student.txt";
             studentEvals = new List<Eval>();
             //StudentList.Add(this);  //not really needed since we recreate the list everytime.
         
@@ -37,7 +34,7 @@ namespace GradeMasterMAUI.Models
                 .OrderBy(eval => eval.GetEvalActivity);
             foreach (var eval in AllEval)
             {
-                if(eval.Student.FileName == FileName)
+                if(eval.Student.GetFileName == GetFileName)
                 {
                     studentEvals.Add(eval);
                 }
@@ -53,7 +50,7 @@ namespace GradeMasterMAUI.Models
             string content = FileAccessService.ReadFile(SaveFilename, errorOrigin: "Student-Unpack"); //reads content of txt
             var tokens = content.Split(Environment.NewLine);
             Student student = new Student(firstname: tokens[0], lastname: tokens[1]);
-            student.FileName = filename;
+            student.GetFileName = filename;
             //Debug.WriteLine($"Unpacking student from file: {filename
             //Debug.WriteLine($"Full path to file: {SaveFilename
             //Debug.WriteLine($"Tokens extracted: {string.Join(", ", tokens
@@ -78,7 +75,7 @@ namespace GradeMasterMAUI.Models
 
         public void Pack()
         {
-            var SaveFilename = Path.Combine(Config.Dir, FileName);
+            var SaveFilename = Path.Combine(Config.Dir, GetFileName);
             string content = string.Format("{1}{0}{2}", Environment.NewLine, Firstname, Lastname);
             //FileAccessService.WriteFile(SaveFilename, data, errorOrigin:"Student-Pack");
             FileAccessService.WriteFile(SaveFilename, content, identifier: "Student", errorOrigin: "Student-Pack");

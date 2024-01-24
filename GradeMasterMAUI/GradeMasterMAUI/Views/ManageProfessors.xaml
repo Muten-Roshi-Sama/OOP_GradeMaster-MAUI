@@ -39,6 +39,10 @@
                 <StackLayout>
                     <Entry x:Name="firstnameEntry" Placeholder="First Name" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
                     <Entry x:Name="lastnameEntry" Placeholder="Last Name" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
+                    <Label x:Name="errorLabel"
+                           TextColor="Red"
+                           FontAttributes="Bold"
+                           IsVisible="False" />
                     <Entry x:Name="salaryEntry" Placeholder="salary" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
                     
                     <Button Text="Add" Clicked="OnAddProfessorClicked" 

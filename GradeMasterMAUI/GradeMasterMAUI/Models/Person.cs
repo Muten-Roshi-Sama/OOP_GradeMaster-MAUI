@@ -31,7 +31,7 @@ namespace GradeMasterMAUI.Models
         {
             get { return lastname; }
         }
-        public string FileName
+        public string GetFileName
         {
             get { return fileName; }
             set {  fileName = value; }
