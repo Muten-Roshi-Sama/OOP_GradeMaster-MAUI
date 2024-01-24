@@ -52,7 +52,7 @@
                             SelectedIndexChanged="OnActivityPickerSelectionChanged"/>
 
                     <Label Text="Insert Cote[0-20] or appreciation[X, TB, B, C, N]." 
-                           FontSize="Medium"/>
+                           FontSize="Small" TextColor="Grey"/>
 
                     <Label x:Name="errorLabel" TextColor="Red" FontAttributes="Bold" IsVisible="False" />
                     <Entry x:Name="evalEntry" Placeholder="[0-20]" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>

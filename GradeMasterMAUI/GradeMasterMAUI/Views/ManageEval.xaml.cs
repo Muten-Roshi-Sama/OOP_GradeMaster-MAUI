@@ -83,10 +83,7 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
             {
                 numericalEval = Eval.Note(eval);
             }
-            else
-            {
-                numericalEval = Convert.ToInt32(evalEntry.Text);
-            }
+            else { numericalEval = Convert.ToInt32(evalEntry.Text);}
 
             if (numericalEval < 0 || numericalEval > 20)
             {throw new FormatException("Evaluation score must be between 0 and 20.");}

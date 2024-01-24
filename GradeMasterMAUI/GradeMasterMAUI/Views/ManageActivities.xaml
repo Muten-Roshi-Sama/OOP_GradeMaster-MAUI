@@ -36,6 +36,10 @@
 
             <Frame CornerRadius="15" Padding="20" BackgroundColor="#252526" HasShadow="True">
                 <StackLayout>
+                    <Label x:Name="activityErrorLabel"
+                           TextColor="Red"
+                           FontAttributes="Bold"
+                           IsVisible="False" />
                     <Entry x:Name="activityNameEntry" Placeholder="Activity Name" PlaceholderColor="#767676" TextColor="White" FontSize="Medium"/>
                     <!--<Picker x:Name="professorPicker" SelectedIndexChanged="OnProfessorSelectedIndexChanged" TextColor="White" FontSize="Medium"/>-->
                     <Picker Title="Select a professor"

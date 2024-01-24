@@ -9,10 +9,11 @@ using Activity = Models.Activity;
 
 public partial class ManageActivities : ContentPage, INotifyPropertyChanged
 {
-    public List<Activity> ActivityList => Activity.GetActivityList(); //CANNOT be static
+    // !!!! CANNOT be static
+    public List<Activity> ActivityList => Activity.GetActivityList(); 
     public List<Professor> ProfessorList => Professor.GetProfessorList();
 
-    private Professor selectedProf;
+    private Professor _selectedProf;
 
 
     public ManageActivities()
@@ -20,10 +21,6 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
 		InitializeComponent();
         Activity.UnpackAll();
         Professor.UnpackAll();
-        //foreach (var prof in Professor.GetProfessorList())
-        //{
-        //    professorPicker.Items.Add(prof);
-        //}
         BindingContext = this;
         DataChangedNotifier.OnDataChanged += UpdateData;
         
@@ -40,7 +37,7 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
         var professorPicker = sender as Picker;
         if (professorPicker != null && professorPicker.SelectedItem is Professor selectedProfessor)
         {
-            selectedProf = selectedProfessor; // Assuming selectedProf is a class-level variable
+            _selectedProf = selectedProfessor; // Assuming selectedProf is a class-level variable
             Debug.WriteLine($"[ManageActivities] SelectedProf is {selectedProfessor.DisplayName}");
         }
     }
@@ -48,28 +45,30 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
 
     private void OnAddActivityClicked(object sender, EventArgs e)
     {
-        string professorFile = selectedProf.GetFileName;
-        //Debug.WriteLine($"[ManageActivities] professorFile is : {professorFile}");
-        if (professorFile == null)
-        {
-            Debug.WriteLine("[OnAddActivityClicked] professorFile is null !");
-            return;
-        }
-
         try
         {
-            var newActivity = new Activity(activityNameEntry.Text, professorFile, Convert.ToInt32(ectsEntry.Text));
+            string professorFile = _selectedProf.GetFileName;
+            //?? throw new ArgumentNullException("professorFile");
+            var activity = activityNameEntry.Text;
+                //?? throw new ArgumentNullException("activity");
+
+
+            var newActivity = new Activity(activity, professorFile, Convert.ToInt32(ectsEntry.Text));
             newActivity.Pack(); // Save the new student
             Debug.WriteLine("[OnAddActivityClicked] New Activity Added !");
-            //Update Data
-            Activity.UnpackAll();
-            OnPropertyChanged(nameof(ActivityList));
-            DataChangedNotifier.NotifyDataChanged();
+            
 
             //Clear Form
             activityNameEntry.Text = string.Empty;
             ectsEntry.Text = string.Empty;
             errorLabel.IsVisible = false;
+            activityErrorLabel.IsVisible = false;
+
+            //professorPicker.SelectedItem = null; 
+            //_selectedProf = null;
+            //professorFile = null;
+
+
         }
         catch (FormatException)
         {
@@ -78,22 +77,29 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
             errorLabel.IsVisible = true;
             ectsEntry.Text = string.Empty;
         }
+        catch (NullReferenceException)
+        {
+            activityErrorLabel.Text = "[Error] Please provide an Activity name and pick a professor.";
+            activityErrorLabel.IsVisible = true;
+        }
         catch (Exception ex)
         {
-            // Handle other types of exceptions
             errorLabel.Text = $"[Error] Unexpected error: {ex.Message}";
             errorLabel.IsVisible = true;
             ectsEntry.Text = string.Empty;
         }
 
-
+        //Update Data
+        Activity.UnpackAll();
+        OnPropertyChanged(nameof(ActivityList));
+        DataChangedNotifier.NotifyDataChanged();
 
     }
 
     
     public Professor SelectedProf
     {
-        get { return selectedProf; }
+        get { return _selectedProf; }
     }
 
 
