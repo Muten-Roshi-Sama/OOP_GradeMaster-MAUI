@@ -10,7 +10,7 @@ using Activity = Models.Activity;
 public partial class ManageBulletin : ContentPage
 {
     private Student _selectedStudent;
-    public List<Student> StudentList => Student.GetStudentList(); //CANNOT be static
+    private List<Student> _studentList => Student.GetStudentList(); //CANNOT be static
     public List<Eval> SelectedStudentEvals => SelectedStudent?.GetStudentEvalList();
 
     
@@ -61,12 +61,17 @@ public partial class ManageBulletin : ContentPage
                 _selectedStudent?.UpdateStudentEvalList();
                 OnPropertyChanged(nameof(SelectedStudentEvals));
 
-                //SelectedStudentAverage = _selectedStudent != null && _selectedStudent.SelectedStudentEvals.Any()
-                //? $"Average for student {_selectedStudent.DisplayName} is : {_selectedStudent.Average():N2}/20"
-                //: "Select a student or add an evaluation";
             }
         }
-        //set => _selectedStudent = value; 
     }
-    //public Student SelectedStudentEval { get => SelectedStudentEvals; set => selectedStudentEvals = value; }
+
+
+    public List<Student> StudentList
+    {
+        get => _studentList;
+    }
+
+
+
+
 }
