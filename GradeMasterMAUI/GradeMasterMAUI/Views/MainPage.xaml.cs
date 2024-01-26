@@ -1,26 +1,19 @@
 namespace GradeMasterMAUI.Views;
-
 using GradeMasterMAUI.Models;
 using GradeMasterMAUI.Services;
-using System.ComponentModel;
-
 using System.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
 using Activity = Models.Activity;
 
 public partial class MainPage : ContentPage
 {
-    public List<Activity> ActivityList => Activity.GetActivityList(); //CANNOT be static
-    public List<Professor> ProfessorList => Professor.GetProfessorList();
+    private List<Activity> _activityList => Activity.GetActivityList(); //CANNOT be static
+    private List<Professor> _professorList => Professor.GetProfessorList();
+
     public MainPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         Activity.UnpackAll();
-        Debug.WriteLine($"ActivityList Count : {ActivityList.Count}");
-        //foreach (var prof in Professor.GetProfessorList())
-        //{
-        //    professorPicker.Items.Add(prof);
-        //}
+        Debug.WriteLine($"ActivityList Count : {_activityList.Count}");
         BindingContext = this;
         UpdateData();
         DataChangedNotifier.OnDataChanged += UpdateData;
@@ -30,7 +23,23 @@ public partial class MainPage : ContentPage
     {
         Activity.UnpackAll();
         Professor.UnpackAll();
-        OnPropertyChanged(nameof(ActivityList));
-        OnPropertyChanged(nameof(ProfessorList));
+        OnPropertyChanged(nameof(_activityList));
+        OnPropertyChanged(nameof(_professorList));
     }
+
+
+
+
+    public List<Activity> ActivityList
+    {
+        get => _activityList;
+    }
+
+    public List<Professor> ProfessorList
+    {
+        get => _professorList;
+    }
+
+
+
 }
