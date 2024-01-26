@@ -36,7 +36,7 @@ namespace GradeMasterMAUI.Models
         }
         public static void UnpackAll()
         {
-            Config.EnsureDirectory();
+            Config.EnsureDirAndAesKey();
             ProfessorList = new List<Professor>();
             IEnumerable<Professor> Allprofessors = Directory
                 .EnumerateFiles(Config.Dir, "*.Professor.txt") //get a list of file names with extension *.student.txt

@@ -28,9 +28,7 @@
             Title="Bulletin"
             ContentTemplate="{DataTemplate Views:ManageBulletin}" />
         
-        <ShellContent
-            Title="About Page"
-            ContentTemplate="{DataTemplate Views:AboutPage}" />
+        
     </TabBar>
     
 </Shell>

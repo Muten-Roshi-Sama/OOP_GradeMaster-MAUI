@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using GradeMasterMAUI.Data;
+
 
 namespace GradeMasterMAUI
 {
@@ -7,11 +7,7 @@ namespace GradeMasterMAUI
     {
         public static MauiApp CreateMauiApp()
         {
-            var dataInitializer = new DataInitializer();
-            DataInitializer.InitializeData();
-
-
-
+            
             //----Default code below-----
             var builder = MauiApp.CreateBuilder();
             builder

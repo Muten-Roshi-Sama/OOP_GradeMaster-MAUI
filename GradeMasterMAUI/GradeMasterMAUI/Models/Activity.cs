@@ -63,7 +63,7 @@ namespace GradeMasterMAUI.Models
                 try
                 {
                     ActivityList = [];
-                    Config.EnsureDirectory();
+                    Config.EnsureDirAndAesKey();
                     IEnumerable<Activity> Allactivities = Directory
                         .EnumerateFiles(Config.Dir, "*.Activity.txt") //get a list of file names with extension *.student.txt
                         .Select(filename => Activity.Unpack(Path.GetFileName(filename))) //deserialize each instance

@@ -5,7 +5,29 @@
              Title="MainPage">
     <ScrollView>
         <StackLayout>
-            <Label Text="Activities List" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#E1E1E1"/>
+
+            <!-- Welcome Message -->
+            <Label Text="Welcome to your GradeMaster app !" 
+                   FontSize="32" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   TextColor="#E1E1E1"
+                   Margin="0,20,0,20" />
+
+            <Label Text="Start by creating a professor, one of his Activities, one student and his evaluation/appreciation for this Activity."
+                   FontSize="17" 
+                    FontAttributes="None" 
+                    HorizontalOptions="StartAndExpand" 
+                    TextColor="Firebrick"
+                    Margin="20"/>
+
+            <!-- Horizontal Separator Bar -->
+            <BoxView HeightRequest="2" 
+                     BackgroundColor="LightGray" 
+                     HorizontalOptions="Fill" 
+                     Margin="20,20" />
+
+            <Label Text="Activities :" FontSize="30" FontAttributes="Bold" HorizontalOptions="Start" TextColor="#E1E1E1"/>
 
             <Frame CornerRadius="15" Padding="15" BackgroundColor="#252526" HasShadow="True">
                 <!-- Column Headers -->

@@ -12,7 +12,7 @@ namespace GradeMasterMAUI.Services
         {
             //lock (FileLock)
             //{
-                Config.EnsureDirectory();
+                Config.EnsureDirAndAesKey();
                 if (!File.Exists(path))
                 {
                     throw new FileNotFoundException($"The file at {path} was not found.[Origin : FileAccessService-{errorOrigin}]");
@@ -27,7 +27,7 @@ namespace GradeMasterMAUI.Services
         {
             //lock (FileLock)
             //{
-                Config.EnsureDirectory();
+                Config.EnsureDirAndAesKey();
                 //string directory = Path.GetDirectoryName(path);
                 //string filenameWithoutExtension = Path.GetFileNameWithoutExtension(path);
                 //string extension = Path.GetExtension(path);

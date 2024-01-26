@@ -64,7 +64,7 @@ namespace GradeMasterMAUI.Models
             try
             {
                 EvalList = new List<Eval>();
-                Config.EnsureDirectory();
+                Config.EnsureDirAndAesKey();
                 IEnumerable<Eval> AllEvals = Directory
                     .EnumerateFiles(Config.Dir, "*.Eval.txt") //get a list of file names with extension *.student.txt
                     .Select(filename => Eval.Unpack(Path.GetFileName(filename))) //deserialize each instance
