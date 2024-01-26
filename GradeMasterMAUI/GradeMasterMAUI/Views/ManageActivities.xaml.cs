@@ -4,14 +4,13 @@ using GradeMasterMAUI.Services;
 using System.ComponentModel;
 
 using System.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
 using Activity = Models.Activity;
 
 public partial class ManageActivities : ContentPage, INotifyPropertyChanged
 {
     // !!!! CANNOT be static
-    public List<Activity> ActivityList => Activity.GetActivityList(); 
-    public List<Professor> ProfessorList => Professor.GetProfessorList();
+    private List<Activity> _activityList => Activity.GetActivityList(); 
+    private List<Professor> _professorList => Professor.GetProfessorList();
 
     private Professor _selectedProf;
 
@@ -102,6 +101,14 @@ public partial class ManageActivities : ContentPage, INotifyPropertyChanged
         get { return _selectedProf; }
     }
 
+    public List<Activity> ActivityList
+    {
+        get => _activityList;
+    }
 
-    
+    public List<Professor> ProfessorList
+    {
+        get => _professorList;
+    }
+
 }
