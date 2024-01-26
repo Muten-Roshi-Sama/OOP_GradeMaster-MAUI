@@ -9,10 +9,10 @@ using Activity = Models.Activity;
 
 public partial class ManageEval : ContentPage, INotifyPropertyChanged
 {
-    public List<Activity> ActivityList => Activity.GetActivityList(); //CANNOT be static
-    public List<Student> StudentList => Student.GetStudentList(); //CANNOT be static
+    private List<Activity> _activityList => Activity.GetActivityList(); //CANNOT be static
+    private List<Student> _studentList => Student.GetStudentList(); //CANNOT be static
     //public static List<AllEvalList> EvaluationsList => AllEvalList.GetEvaluationsList();
-    public List<Eval> EvalList => Eval.GetEvalList(); //CANNOT be static ?? //TODO
+    private List<Eval> _evalList => Eval.GetEvalList(); //CANNOT be static ?? //TODO
 
     private Student? _selectedStudent;
     private Activity? _selectedActivity;
@@ -142,5 +142,24 @@ public partial class ManageEval : ContentPage, INotifyPropertyChanged
 
 
     }
+
+
+
+
+    public List<Student> StudentList
+    {
+        get => _studentList;
+    }
+    public List<Activity> ActivityList
+    {
+        get => _activityList;
+    }
+    public List<Eval> EvalList
+    {
+        get => _evalList;
+    }
+
+
+
 
 }
